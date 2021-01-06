@@ -13,7 +13,7 @@ class Event(db.Model):
     expires = db.Column(db.DateTime, nullable=False)
     resolved = db.Column(db.Boolean, default=False)
     outcome = db.Column(db.String, default=None)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     payoff = db.Column(db.Integer, default=100)
     demo_event = db.Column(db.Boolean, default=False)
 
