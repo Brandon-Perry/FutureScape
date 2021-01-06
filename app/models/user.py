@@ -1,9 +1,13 @@
 from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from sqlalchemy.orm import relationship
+
+from .prediction import predictions
+from .comments import comments
 
 class User(db.Model, UserMixin):
-    __name__ ='users'
+    __tablename__ ='users'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
@@ -11,6 +15,9 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     admin = db.Column(db.Boolean(), default=False)
     points = db.Column(db.Integer())
+
+    events = db.relationship('Event', secondary=predictions, back_populates='users')
+    comments = db.relationship('Event', secondary=comments, back_populates='users')
 
     @property
     def password(self):
