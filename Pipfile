@@ -14,6 +14,7 @@ flask-login = "*"
 alembic = "*"
 python-dotenv = "*"
 werkzeug = "*"
+flask-cors = "*"
 
 [dev-packages]
 psycopg2-binary = "*"
