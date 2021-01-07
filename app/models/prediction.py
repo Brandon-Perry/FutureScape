@@ -30,5 +30,5 @@ class Prediction(db.Model):
         )
 
     users = db.relationship('User', primaryjoin=user_id==User.id, back_populates='events')
-    event = db.relationship('Event', primaryjoin=event_id==Event.id, back_populates='users')
-    choice = db.relationship('Choice', back_populates='choices')
+    events = db.relationship('Event', primaryjoin=event_id==Event.id, back_populates='users')
+    choices = db.relationship('Choice', back_populates='predictions')

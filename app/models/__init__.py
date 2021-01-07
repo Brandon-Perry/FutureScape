@@ -4,4 +4,4 @@ from .choice import Choice
 from .category import Category
 from .event import Event
 from .prediction import Prediction
-from .comments import Comment
+# from .comments import Comment

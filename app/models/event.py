@@ -18,4 +18,5 @@ class Event(db.Model):
     demo_event = db.Column(db.Boolean, default=False)
 
     users = db.relationship('Prediction', back_populates='events')
-    comments = db.relationship('Comment', back_populates='events')
+    categories = db.relationship('Category', back_populates='events')
+    # comments = db.relationship('Comment', back_populates='events')

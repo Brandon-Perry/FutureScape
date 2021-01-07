@@ -17,7 +17,7 @@ class User(db.Model, UserMixin):
     points = db.Column(db.Integer())
 
     events = db.relationship('Prediction', back_populates='users')
-    comments = db.relationship('Comment', back_populates='users')
+    # comments = db.relationship('Comment', back_populates='users')
 
     @property
     def password(self):
