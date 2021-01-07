@@ -8,6 +8,7 @@ from flask_cors import CORS
 
 
 from .config import Config
+from .seeds import seed_commands
 from .models import db, User
 from .api.auth_routes import auth_routes
 from .api.user_routes import user_routes
@@ -23,6 +24,7 @@ login.login_view = 'auth.unauthorized'
 def load_user(id):
     return User.query.get(int(id))
 
+app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
 
