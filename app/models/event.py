@@ -1,7 +1,7 @@
 from .db import db
 from sqlalchemy.orm import relationship
-from .prediction import predictions
-from .comments import comments
+# from .prediction import predictions
+# from .comments import comments
 
 class Event(db.Model):
 
@@ -17,5 +17,5 @@ class Event(db.Model):
     payoff = db.Column(db.Integer, default=100)
     demo_event = db.Column(db.Boolean, default=False)
 
-    users = db.relationship('User', secondary=predictions, back_populates='events')
-    comments = db.relationship('User', secondary=comments, back_populates='events')
+    users = db.relationship('Prediction', back_populates='events')
+    comments = db.relationship('Comment', back_populates='events')
