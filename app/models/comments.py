@@ -1,11 +1,9 @@
 from .db import db
 from sqlalchemy.schema import Table
+from sqlalchemy.orm import relationship
+from .user import User
+from .event import Event
 
-# comments = db.Table('comments', 
-#             db.Column('user_id', db.Integer, db.ForeignKey('users.id'), nullable=False),
-#             db.Column('event_id', db.Integer, db.ForeignKey('events.id'), nullable=False),
-#             db.Column('comment', db.String(500), nullable=False)
-#             )
 
 
 class Comment(db.Model):
@@ -18,6 +16,6 @@ class Comment(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False),
     comment = db.Column(db.String(500), nullable=False)
 
-    user = db.relationship('User', back_populates='events')
-    event = db.relationship('Event', back_populates='users')
+    user = db.relationship('User', primaryjoin=user_id==User.id, back_populates='events')
+    event = db.relationship('Event', primaryjoin=event_id==Event.id, back_populates='users')
 

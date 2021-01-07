@@ -1,6 +1,8 @@
 from .db import db
 from sqlalchemy.orm import relationship
 from sqlalchemy import CheckConstraint
+from .user import User
+from .event import Event
 # from sqlalchemy.schema import Table
 
 
@@ -27,6 +29,6 @@ class Prediction(db.Model):
         CheckConstraint('probability <= 100')
         )
 
-    user = db.relationship('User', back_populates='events')
-    event = db.relationship('Event', back_populates='users')
+    users = db.relationship('User', primaryjoin=user_id==User.id, back_populates='events')
+    event = db.relationship('Event', primaryjoin=event_id==Event.id, back_populates='users')
     choice = db.relationship('Choice', back_populates='choices')
