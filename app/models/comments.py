@@ -12,10 +12,10 @@ class Comment(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False),
-    event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False),
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
     comment = db.Column(db.String(500), nullable=False)
-
-    user = db.relationship('User', primaryjoin=user_id==User.id, back_populates='events')
-    event = db.relationship('Event', primaryjoin=event_id==Event.id, back_populates='users')
+    # test = db.Column(db.String(100))
+    user = db.relationship('User', primaryjoin=user_id==User.id, back_populates='comments')
+    event = db.relationship('Event', primaryjoin=event_id==Event.id, back_populates='comments')
 
