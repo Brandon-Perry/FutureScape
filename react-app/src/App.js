@@ -5,7 +5,14 @@ import {useDispatch} from 'react-redux'
 import './App.css';
 
 import LoginForm from './components/auth/login'
+import SignUpForm from './components/auth/signup'
+
 import {authenticate} from './store/session'
+
+
+
+
+
 
 function App() {
 	const [loaded, setLoaded] = useState(false);
@@ -24,6 +31,7 @@ function App() {
   return (
     <div className="App">
       <LoginForm />
+      <SignUpForm />
     </div>
   );
 }

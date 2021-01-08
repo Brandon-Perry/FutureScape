@@ -5,12 +5,13 @@ import {Provider} from 'react-redux'
 import './index.css';
 import App from './App';
 import configureStore from './store'
+import { createStore } from 'redux';
 
-const preloadedState = {
-  test: 'test'
-}
+// const preloadedState = {
+//   user: null
+// }
 
-let store = configureStore(preloadedState)
+const store = configureStore()
 
 function Root() {
   return (

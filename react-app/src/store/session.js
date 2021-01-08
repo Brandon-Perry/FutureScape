@@ -40,6 +40,10 @@ export const login = (user) => async(dispatch) => {
     })
 
     let userJson = await response.json()
+    if (Object.keys(userJson).includes('errors')) {
+        console.log('----------')
+        console.log('HIT ERRORS LIKE 45 SESSION.JS')
+    }
     if (Object.keys(userJson).includes('errors')) return
     dispatch(setUser(userJson))
 }
@@ -59,6 +63,8 @@ const sessionReducer = (state = intialState, action) => {
     let newState;
     switch (action.type) {
         case SET_USER:
+            console.log('-----------')
+            console.log('hit SET_USER in reducer')
             newState = Object.assign({}, state);
             newState.user = action.payload;
             return newState
