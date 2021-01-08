@@ -6,6 +6,7 @@ import './App.css';
 
 import LoginForm from './components/auth/login'
 import SignUpForm from './components/auth/signup'
+import LogoutButton from './components/auth/logout'
 
 import {authenticate} from './store/session'
 
@@ -32,6 +33,7 @@ function App() {
     <div className="App">
       <LoginForm />
       <SignUpForm />
+      <LogoutButton />
     </div>
   );
 }
