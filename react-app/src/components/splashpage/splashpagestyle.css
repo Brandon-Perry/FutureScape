@@ -1,0 +1,26 @@
+.splash-container {
+    background-image: url('../../assets/splashpage_background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0px;
+    bottom: 5%;
+    width: 100%
+}
+
+.splash-footer {
+    background: black;
+    position: absolute;
+    top: 95%;
+    /* bottom: 0px; */
+    width: 100%;
+}
+
+.splash-footer__github {
+    padding: 5px 5px 5px 1%
+}
+
+.splash-footer__github img {
+    height: 50%;
+    width: auto;
+}
