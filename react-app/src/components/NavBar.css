@@ -1,0 +1,27 @@
+.NavBar__container {
+    background-color: blue;
+    position: absolute;
+    top: 0px;
+    height: 75px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.NavBar__user_logout_container {
+    margin-right: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.NavBar__user {
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid darkblue;
+    justify-content: center;
+}
+
+/* .NavBar__user:hover {
+
+} */

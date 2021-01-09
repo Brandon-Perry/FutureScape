@@ -8,10 +8,9 @@ import './reset.css'
 import './App.css';
 
 //COMPONENTS
-import LoginForm from './components/auth/login'
-import SignUpForm from './components/auth/signup'
-import LogoutButton from './components/auth/logout'
+
 import SplashPage from './components/splashpage/splashpage'
+import NavBar from './components/NavBar'
 
 //STORE
 import {authenticate} from './store/session'
@@ -40,6 +39,9 @@ function App() {
 	  	<Switch>
 			<Route exact path='/'>
 				<SplashPage />
+			</Route>
+			<Route exact path='/app'>
+				<NavBar />
 			</Route>
 		</Switch>
 	  </BrowserRouter>
