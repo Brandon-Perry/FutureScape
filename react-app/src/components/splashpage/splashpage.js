@@ -1,15 +1,27 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import './splashpagestyle.css'
 
 import SplashFooter from './splashfooter'
 import SignUpForm from '../auth/signup'
-
+import LoginForm from '../auth/login'
 
 const SplashPage = () => {
+    const [loginState, setLoginState] = useState(false)
+
+
+    const changeLoginState = (e) => {
+        e.preventDefault()
+        setLoginState(!loginState)
+    }
+
+
     return (
         <div>
             <div className='splash-container'>
+                <div className='splash-login__buton'>
+                    <button onClick={changeLoginState}>Login</button>
+                </div>
                 <div className='splash-main'>
                     <h1 className='splash-title'>FutureScape</h1>
                     <p className='splash-subtitle'>Know Your Future</p>
@@ -21,7 +33,7 @@ const SplashPage = () => {
                             by signing up today!
                         </p>
                     </div>
-                    <SignUpForm />
+                    {loginState ? <LoginForm /> : <SignUpForm />}
                     <div>
                         <p>Or, take a peek</p>
                     </div>

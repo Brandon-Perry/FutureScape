@@ -15,6 +15,8 @@ alembic = "*"
 python-dotenv = "*"
 werkzeug = "*"
 flask-cors = "*"
+pyjwt = "*"
+pylint = "*"
 
 [dev-packages]
 psycopg2-binary = "*"

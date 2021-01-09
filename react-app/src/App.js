@@ -36,7 +36,13 @@ function App() {
 		return null;
 	}
   return (
-    <SplashPage />
+	  <BrowserRouter>
+	  	<Switch>
+			<Route exact path='/'>
+				<SplashPage />
+			</Route>
+		</Switch>
+	  </BrowserRouter>
   );
 }
 

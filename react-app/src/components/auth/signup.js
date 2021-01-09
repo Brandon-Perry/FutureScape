@@ -60,11 +60,12 @@ const SignUpForm = () => {
 
     return (
         <div className='signup'>
+            <h2>Sign Up</h2>
             <form onSubmit={onSignUp} className='signup-form'>
                 <input 
                     onChange={updateUserName} 
                     value={username} 
-                    placeholder='Name'
+                    placeholder='Username'
                 />
                 <input 
                     onChange={updateEmail} 

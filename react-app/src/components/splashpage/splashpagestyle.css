@@ -54,6 +54,11 @@
 } */
 
 .signup-form button {
-    max-width: 100px;
+    max-width: 150px;
     margin-top: 10px;
+}
+
+.splash-login__button {
+    display: flex;
+    
 }
