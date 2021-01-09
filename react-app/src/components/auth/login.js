@@ -13,6 +13,7 @@ const LoginForm = () => {
 
     const dispatch = useDispatch()
 
+    
     const onLogin = async(e) => {
         e.preventDefault();
 
@@ -20,33 +21,44 @@ const LoginForm = () => {
             sessionActions.login({email, password})
         )
     }
-
+    
     useEffect(() => {}, [dispatch])
-
+    
     const updateEmail = (e) => {
         setEmail(e.target.value)
     }
-
+    
     const updatePassword = (e) => {
         setPassword(e.target.value)
     }
-
+    
+    if (currentUser) {
+        return <Redirect to='/app' />
+    }
     return (
-        <div>
+        <div className='signup'>
             <div>
-                {currentUser ? <p>User logged in</p> : <p>No user logged in</p>}
+                <h2>Login</h2>
             </div>
-            <form onSubmit={onLogin}>
+            <form className='signup-form' onSubmit={onLogin}>
                 <div>
                     {errors.map(error => (
                         <div>{error}</div>
                     ))}
                 </div>
-                <div>
-                    <input value={email} onChange={updateEmail} />
-                    <input value={password} onChange={updatePassword} />
-                    <button type='submit'>Log in</button>
-                </div>
+                
+                <input 
+                    value={email} 
+                    onChange={updateEmail} 
+                    placeholder='Email'
+                />
+                <input 
+                    value={password} 
+                    onChange={updatePassword} 
+                    placeholder='Password'
+                />
+                <button type='submit'>Log in</button>
+               
             </form>
         </div>
     )

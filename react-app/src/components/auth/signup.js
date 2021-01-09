@@ -59,12 +59,29 @@ const SignUpForm = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={onSignUp}>
-                <input onChange={updateUserName} value={username} />
-                <input onChange={updateEmail} value={email} />
-                <input onChange={updatePassword} value={password} />
-                <input onChange={updateRepeatPassword} value={repeatPassword} />
+        <div className='signup'>
+            <h2>Sign Up</h2>
+            <form onSubmit={onSignUp} className='signup-form'>
+                <input 
+                    onChange={updateUserName} 
+                    value={username} 
+                    placeholder='Username'
+                />
+                <input 
+                    onChange={updateEmail} 
+                    value={email}
+                    placeholder='Email'
+                />
+                <input 
+                    onChange={updatePassword} 
+                    value={password} 
+                    placeholder='Password'
+                />
+                <input 
+                    onChange={updateRepeatPassword} 
+                    value={repeatPassword} 
+                    placeholder='Repeat Password'
+                />
                 <button type='submit'>Sign Up</button>
             </form>
         </div>

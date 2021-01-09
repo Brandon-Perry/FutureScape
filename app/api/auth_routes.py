@@ -26,14 +26,15 @@ def login():
     form = LoginForm()
     print('Form', form.data)
     print(request.get_json())
-
+    body = request.get_json()
     form['csrf_token'].data = request.cookies['csrf_token']
-
+    form['email'].data = body.get('email')
+    form['password'].data = body.get('password')
     if form.validate_on_submit():
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
         return user.to_dict()
-        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 @auth_routes.route('/logout')

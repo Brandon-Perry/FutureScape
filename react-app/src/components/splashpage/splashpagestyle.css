@@ -1,0 +1,64 @@
+.splash-container {
+    background-image: url('../../assets/splashpage_background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0px;
+    bottom: 5%;
+    width: 100%
+}
+
+.splash-container p, h1 {
+    font-family: sans-serif;
+}
+
+.splash-footer {
+    background: black;
+    position: absolute;
+    top: 95%;
+    /* bottom: 0px; */
+    width: 100%;
+}
+
+.splash-footer__github {
+    padding: 5px 5px 5px 1%
+}
+
+.splash-footer__github img {
+    height: 50%;
+    width: auto;
+}
+
+.splash-main {
+    background-color: white;
+    max-width: 45%;
+    margin-left: 10%;
+    margin-top: 5%;
+    padding: 20px;
+    border-radius: 30px;
+    border: 1px solid black
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-form input {
+    max-width: 50%;
+    margin-top: 10px;
+}
+
+/* .signup-form input:active {
+    border: 1px solid blue;
+} */
+
+.signup-form button {
+    max-width: 150px;
+    margin-top: 10px;
+}
+
+.splash-login__button {
+    display: flex;
+    
+}

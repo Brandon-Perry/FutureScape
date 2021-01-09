@@ -12,7 +12,11 @@ Users can comment comment on different events to discuss their thoughts. Users c
 Bonus MVPs
 Flair for users
 
-Back-end routes: /api/users/ <-- Get all users /api/users/:id <-- Get a user /api/users/ POST <-- Create a user /api/users/ PUT <-- Edit a user /api/users/:id DELETE <-- Delete a user /api/users/:id/events <-- Gets all events that a user has predicted on /api/users/:id/comments <-- Get all comments that a user has made
+Back-end routes: /api/users/ <-- Get all users 
+/api/users/:id <-- Get a user 
+/api/users/ POST <-- Create a user 
+/api/users/ PUT <-- Edit a user /api/users/:id DELETE <-- Delete a user 
+/api/users/:id/events <-- Gets all events that a user has predicted on /api/users/:id/comments <-- Get all comments that a user has made
 
 /api/events/:id <-- Get an event 
 /api/events/ <-- Get all events 

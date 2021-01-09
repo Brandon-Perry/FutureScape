@@ -1,13 +1,19 @@
+//MODULES
 import React, {useEffect, useState} from 'react'
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import {useDispatch} from 'react-redux'
 
-
+//CSS
+import './reset.css'
 import './App.css';
 
+//COMPONENTS
 import LoginForm from './components/auth/login'
 import SignUpForm from './components/auth/signup'
 import LogoutButton from './components/auth/logout'
+import SplashPage from './components/splashpage/splashpage'
 
+//STORE
 import {authenticate} from './store/session'
 
 
@@ -30,11 +36,13 @@ function App() {
 		return null;
 	}
   return (
-    <div className="App">
-      <LoginForm />
-      <SignUpForm />
-      <LogoutButton />
-    </div>
+	  <BrowserRouter>
+	  	<Switch>
+			<Route exact path='/'>
+				<SplashPage />
+			</Route>
+		</Switch>
+	  </BrowserRouter>
   );
 }
 
