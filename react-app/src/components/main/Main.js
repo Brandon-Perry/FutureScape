@@ -71,8 +71,7 @@ const Main = () => {
                     </select>
                 </div>
                 <div className='Main__settings_search'>
-                    <label>Search</label>
-                    <input onChange={changeSearchTerm}></input>
+                    <input placeholder='Search' onChange={changeSearchTerm}></input>
                 </div>
             </div>
         </div>

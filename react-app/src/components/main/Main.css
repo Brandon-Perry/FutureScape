@@ -11,3 +11,31 @@
     border-radius: 20px;
 
 }
+
+.Main__settings_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* background-color: lightblue; */
+    background-color: rgba(173, 216, 230, .5);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 5px;
+    border-bottom: 1px solid black;
+
+    color: black;
+    font-size: small;
+    
+    
+}
+
+.Main__settings_container div {
+    margin: 2px;
+    display: flex;
+    align-content: center;
+    padding: 3px;
+}
+
+.Main__settings_search input {
+    width: 120px;
+}
