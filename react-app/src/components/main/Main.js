@@ -7,6 +7,8 @@ const Main = () => {
     const [showOnlyUnresolved, setShowOnlyUnresolved] = useState(false)
     const [sortBy, setSortBy] = useState('popular')
     const [categories, setCategories] = useState('None')
+    const [filterCategory, setFilterCategory] = useState(null)
+    const [searchTerm, setSearchTerm] = useState(null)
 
 
     const changeOnlyResolved = () => {
@@ -24,20 +26,29 @@ const Main = () => {
             const names = resJson['categories'].map(el => {
                 return el.name
             })
-            console.log(resJson)
             setCategories([...names])
         })()
     }, [])
 
     const makeItem = (el) => {
-        return <option value={el}>{el}</option>
+        return <option key={el} value={el}>{el}</option>
     }
-   
+
+    const changeFilterCategory = (e) => {
+        setFilterCategory(e.target.value)
+    }
+    
+    const changeSearchTerm = (e) => {
+        if (e.target.value === '') {
+            setSearchTerm(null)
+        } else {
+            setSearchTerm(e.target.value)
+        }
+    }
 
 
     return (
         <div className='Main__container'>
-          
             <div className='Main__settings_container'>
                 <div className='Main__settings_resolved'>
                     <label>Show Only Unresolved</label>
@@ -53,12 +64,15 @@ const Main = () => {
                 </div>
                 <div className='Main__settings_categories'>
                     <label>Categories</label>
-                    <select name='categories'>
-                        {/* {console.log(typeof categories)} */}
+                    <select name='categories' onChange={changeFilterCategory}>
                         {Object.values(categories).map(el => {
                             return makeItem(el)
                         })}
                     </select>
+                </div>
+                <div className='Main__settings_search'>
+                    <label>Search</label>
+                    <input onChange={changeSearchTerm}></input>
                 </div>
             </div>
         </div>
