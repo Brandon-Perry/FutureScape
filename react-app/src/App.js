@@ -11,6 +11,7 @@ import './App.css';
 
 import SplashPage from './components/splashpage/splashpage'
 import NavBar from './components/NavBar'
+import Main from './components/main/Main'
 
 //STORE
 import {authenticate} from './store/session'
@@ -42,6 +43,7 @@ function App() {
 			</Route>
 			<Route exact path='/app'>
 				<NavBar />
+				<Main />
 			</Route>
 		</Switch>
 	  </BrowserRouter>

@@ -9,4 +9,10 @@ class Category(db.Model):
     name = db.Column(db.String, nullable=False)
     events = db.relationship('Event', back_populates='category')
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
     
