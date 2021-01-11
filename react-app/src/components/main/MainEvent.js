@@ -18,7 +18,7 @@ const MainEvent = ({event}) => {
             </div>
 
             <div className='Main__event_resolved'>
-                <p>Resolved?</p>
+                {event.resolved ? <p>Unresolved</p> : <p>Resolved</p>}
             </div>
 
         </div>

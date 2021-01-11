@@ -39,3 +39,19 @@
 .Main__settings_search input {
     width: 120px;
 }
+
+
+
+.Main__events_container {
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.Main__event {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
