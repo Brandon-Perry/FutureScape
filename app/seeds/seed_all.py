@@ -46,8 +46,8 @@ def seed_all():
         demo_user.events.append(prediction1)
         demo_user.events.append(prediction2)
         demo_user.comments.append(comment1)
-        event1.users.append(prediction1)
-        event1.users.append(prediction2)
+        event1.predictions.append(prediction1)
+        event1.predictions.append(prediction2)
         event1.comments.append(comment1)
         
 

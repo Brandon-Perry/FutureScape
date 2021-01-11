@@ -17,7 +17,7 @@ class Event(db.Model):
     payoff = db.Column(db.Integer, default=100)
     demo_event = db.Column(db.Boolean, default=False)
 
-    users = db.relationship('Prediction', back_populates='events')
+    predictions = db.relationship('Prediction', back_populates='events')
     category = db.relationship('Category', back_populates='events')
     comments = db.relationship('Comment', back_populates='event')
 
@@ -32,6 +32,6 @@ class Event(db.Model):
             # 'category':self.category,
             'payoff': self.payoff,
             'demo_event': self.demo_event,
-            'users':self.users,
+            'predictions':self.predictions,
             # 'comments':self.comments
         }

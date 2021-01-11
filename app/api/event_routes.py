@@ -11,9 +11,9 @@ def get_all_events():
     data = [event.to_dict() for event in events]
     for el in data:
         new_list = []
-        for prediction in el['users']:
+        for prediction in el['predictions']:
             new_list.append(prediction.to_dict_min())
-        el['users'] = new_list
+        el['predictions'] = new_list
     print('---------------')
     print(data)
     print('----------------')
