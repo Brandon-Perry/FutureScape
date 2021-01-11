@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import './Main.css'
 
 import * as eventActions from '../../store/events'
+import MainEvent from './MainEvent'
 
 const Main = () => {
 
@@ -12,6 +13,8 @@ const Main = () => {
     const [categories, setCategories] = useState('None')
     const [filterCategory, setFilterCategory] = useState(null)
     const [searchTerm, setSearchTerm] = useState(null)
+    const [loaded, setLoaded] = useState(false)
+    const events = useSelector((state) => state.events.events)
 
     const dispatch = useDispatch();
 
@@ -25,6 +28,7 @@ const Main = () => {
 
     useEffect(() => {
         (async() => {
+            dispatch(eventActions.allEvents())
             const response = await fetch('/api/categories/')
             const resJson = await response.json()
             const names = resJson['categories'].map(el => {
@@ -32,7 +36,7 @@ const Main = () => {
             })
             setCategories([...names])
 
-            dispatch(eventActions.allEvents())
+            setLoaded(true)
             
         })()
     }, [])
@@ -80,6 +84,13 @@ const Main = () => {
                 <div className='Main__settings_search'>
                     <input placeholder='Search' onChange={changeSearchTerm}></input>
                 </div>
+            </div>
+
+
+            <div className='Main__events_container'>
+                {events ? events.map((el) => (
+                    <MainEvent event={el} />
+                )) : null}
             </div>
         </div>
     )

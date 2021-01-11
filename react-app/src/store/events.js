@@ -12,7 +12,7 @@ export const allEvents = () => async(dispatch) => {
     const response = await fetch('/api/events/')
 
     const resJson = await response.json()
-    console.log(resJson)
+    // console.log(resJson)
     dispatch(setEvents(resJson))
     return response
 }
