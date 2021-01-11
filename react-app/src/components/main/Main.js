@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux'
 
 import './Main.css'
+
+import * as eventActions from '../../store/events'
 
 const Main = () => {
 
@@ -10,6 +13,7 @@ const Main = () => {
     const [filterCategory, setFilterCategory] = useState(null)
     const [searchTerm, setSearchTerm] = useState(null)
 
+    const dispatch = useDispatch();
 
     const changeOnlyResolved = () => {
         setShowOnlyUnresolved(!showOnlyUnresolved)
@@ -27,6 +31,9 @@ const Main = () => {
                 return el.name
             })
             setCategories([...names])
+
+            dispatch(eventActions.allEvents())
+            
         })()
     }, [])
 

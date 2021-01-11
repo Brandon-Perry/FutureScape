@@ -20,3 +20,18 @@ class Event(db.Model):
     users = db.relationship('Prediction', back_populates='events')
     category = db.relationship('Category', back_populates='events')
     comments = db.relationship('Comment', back_populates='event')
+
+    def to_dict(self):
+        return {
+            'id':self.id,
+            'title': self.title,
+            'description': self.description,
+            'expires': self.expires,
+            'resolved': self.resolved,
+            'outcome':self.outcome,
+            # 'category':self.category,
+            'payoff': self.payoff,
+            'demo_event': self.demo_event,
+            'users':self.users,
+            # 'comments':self.comments
+        }

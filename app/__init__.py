@@ -14,6 +14,7 @@ from .models import db, User
 from .api.auth_routes import auth_routes
 from .api.user_routes import user_routes
 from .api.category_routes import category_routes
+from .api.event_routes import event_routes
 
 
 #App initilization and login
@@ -34,6 +35,7 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(category_routes, url_prefix='/api/categories')
+app.register_blueprint(event_routes, url_prefix='/api/events')
 
 
 #DB initialization
