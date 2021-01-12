@@ -51,3 +51,13 @@ class Prediction(db.Model):
             'choice_id':self.choice_id,
             'probability':self.probability,
         }
+
+    def to_dict_event(self):
+        return {
+            'user_id':self.user_id,
+            'event_id':self.event_id,
+            'choice_id':self.choice_id,
+            'probability':self.probability,
+            'users':self.users,
+            'choices':self.choices
+        }

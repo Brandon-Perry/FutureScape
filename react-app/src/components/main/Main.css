@@ -45,7 +45,7 @@
 .Main__events_container {
     margin: 5px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 

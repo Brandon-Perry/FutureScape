@@ -9,3 +9,9 @@ class Choice(db.Model):
     name = db.Column(db.String(55), nullable=False)
 
     predictions = db.relationship('Prediction', back_populates='choices')
+
+    def to_dict_min(self):
+        return {
+            'id':self.id,
+            'name':self.name
+        }

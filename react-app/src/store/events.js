@@ -2,7 +2,6 @@
 const GET_EVENTS = 'events'
 
 
-
 const setEvents = (events) => {
     return {type: GET_EVENTS, payload: events}
 }
@@ -17,6 +16,8 @@ export const allEvents = () => async(dispatch) => {
     return response
 }
 
+
+
 const initialState = {events: null}
 
 const eventReducer = (state = initialState, action) => {
@@ -29,6 +30,7 @@ const eventReducer = (state = initialState, action) => {
             return new_state;
         default:
             return state
+        
     }
 }
 

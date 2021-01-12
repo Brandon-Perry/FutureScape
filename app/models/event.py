@@ -21,7 +21,7 @@ class Event(db.Model):
     category = db.relationship('Category', back_populates='events')
     comments = db.relationship('Comment', back_populates='event')
 
-    def to_dict(self):
+    def to_dict_main_app(self):
         return {
             'id':self.id,
             'title': self.title,
@@ -29,9 +29,24 @@ class Event(db.Model):
             'expires': self.expires,
             'resolved': self.resolved,
             'outcome':self.outcome,
-            # 'category':self.category,
+            'category':self.category,
             'payoff': self.payoff,
             'demo_event': self.demo_event,
             'predictions':self.predictions,
             # 'comments':self.comments
+        }
+
+    def to_dict_full(self):
+        return {
+            'id':self.id,
+            'title': self.title,
+            'description': self.description,
+            'expires': self.expires,
+            'resolved': self.resolved,
+            'outcome':self.outcome,
+            'category':self.category,
+            'payoff': self.payoff,
+            'demo_event': self.demo_event,
+            'predictions':self.predictions,
+            'comments':self.comments
         }
