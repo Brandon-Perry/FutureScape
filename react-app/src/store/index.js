@@ -9,7 +9,7 @@ import currentEventReducer from './currentEvent'
 const rootReducer = combineReducers({
     session: sessionReducer,
     events: eventReducer,
-    currentEventReducer
+    currentEvent: currentEventReducer
 })
 
 

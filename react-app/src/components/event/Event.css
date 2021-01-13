@@ -1,0 +1,45 @@
+.Event__container {
+    margin-left: 0 auto;
+    margin-right: 0 auto;
+    position: fixed;
+    top: 100px;
+    bottom: 25px;
+    left: 25%;
+    right: 25%;
+    width: 50%;
+    border: 2px solid blue;
+    border-radius: 20px;
+
+}
+
+.Event__title {
+    border-bottom: 2px solid blue;
+}
+
+.Event__description_graph_container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    height: 100px;
+}
+
+.Event__description {
+    width:50%;
+    height: 100%;
+    border-right: 2px solid blue;
+    border-bottom: 2px solid blue;
+    margin-right: 5px;
+}
+
+.Event__graph {
+    width:50%;
+    height:100%;
+    border-left: 2px solid blue;
+    border-bottom: 2px solid blue;
+    margin-left: 5px;
+}
+
+.Event__comments_container {
+    position: absolute;
+    bottom: 0px;
+}
