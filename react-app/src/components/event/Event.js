@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams} from 'react-router-dom'
+import Slider from '@material-ui/core/Slider'
 
 import './Event.css'
 
@@ -9,13 +10,59 @@ import * as currentEventActions from '../../store/currentEvent'
 const Event = () => {
     let {eventId} = useParams();
     const dispatch = useDispatch()
-
+    
+    const [probabilityYes, setProbabilityYes] = useState(50)
+    const [probabilityNo, setProbabilityNo] = useState(50)
+    const [userList, setUserList] = useState(null)
+    const [yesList, setYesList] = useState(null)
+    const [noList, setNoList] = useState(null)
+    const [pointsYes, setPointsYes] = useState(null)
+    const [pointsNo, setPointsNo] = useState(null)
+    const eventInfo = useSelector((state) => state.currentEvent)
+    
     useEffect(() => {
         dispatch(currentEventActions.getCurrentEvent(eventId))
+
         
     }, [dispatch])
+    
+    
+    useEffect(()=> {
+        if (!eventInfo.predictions) return
+        console.log('hit second use effect')
+        const listOfUsers = eventInfo.predictions.filter(prediction => {
+            if (prediction.choice_id == 1) {
+                
+                return prediction
+            }
+        })
+        setUserList(listOfUsers.map(prediction => prediction.users.username))
+    
+        const listOfYes = eventInfo.predictions.filter(prediction => {
+            if (prediction.choice_id == 1) {
+                return prediction
+            }
+        })
+        setYesList(listOfYes.map(prediction => prediction.probability))
+    
+        const listOfNo = eventInfo.predictions.filter(prediction => {
+            if (prediction.choice_id == 2) {
+                return prediction
+            }
+        })
+        setNoList(listOfNo.map(prediction => prediction.probability))
 
-    const eventInfo = useSelector((state) => state.currentEvent)
+    }, [eventInfo])
+   
+
+
+    const changeProbabilityYes = (e, newValue) => {
+        
+        setProbabilityYes(newValue)
+        setProbabilityNo(100 - newValue)
+    }
+
+
 
     const displayComment = (comment) => {
         return (
@@ -33,11 +80,11 @@ const Event = () => {
     }
 
     const displayYesPredictions = () => {
-        return eventInfo.predictions.filter(prediction => prediction.choice_id == 1).map((prediction) => {
+        return yesList.map((prediction) => {
             
             return (
                 <div className='Event__prediction_yes'>
-                    <p>{prediction.probability}</p>
+                    <p>{prediction}</p>
                 </div>
             )
             
@@ -45,11 +92,11 @@ const Event = () => {
     }
 
     const displayNoPredictions = () => {
-        return eventInfo.predictions.filter(prediction => prediction.choice_id == 2).map((prediction) => {
+        return noList.map((prediction) => {
             
             return (
                 <div className='Event__prediction_no'>
-                    <p>{prediction.probability}</p>
+                    <p>{prediction}</p>
                 </div>
             )
             
@@ -57,11 +104,11 @@ const Event = () => {
     }
 
     const displayUsernamePredictions = () => {
-        return eventInfo.predictions.filter(prediction => prediction.choice_id == 1).map((prediction) => {
+        return userList.map((username) => {
             
             return (
                 <div className='Event__prediction_username'>
-                    <p>{prediction.users.username}</p>
+                    <p>{username}</p>
                 </div>
             )
             
@@ -86,18 +133,30 @@ const Event = () => {
 
             <div className='Event__predictions_container'>
                 <div className='Event__prediction_username_container'>
-                    {eventInfo.predictions ? displayUsernamePredictions() : null}
+                    {userList ? displayUsernamePredictions() : null}
                 </div>
                 <div className='Event__prediction_yes_container'>
-                    {eventInfo.predictions ? displayYesPredictions() : null}
+                    {yesList ? displayYesPredictions() : null}
                 </div>
                 <div className='Event__prediction_no_container'>
-                    {eventInfo.predictions ? displayNoPredictions() : null}
+                    {noList ? displayNoPredictions() : null}
                 </div>
             </div>
 
             <div className='Event__user_prediction_container'>
-                <input type='range' min='1' max='99' value='50' id='userPrediction'></input>
+                {probabilityYes}
+                {probabilityNo}
+                {console.log(userList)}
+                {console.log(yesList)}
+                {console.log(noList)}
+                <Slider 
+                    step={1} 
+                    min={1} 
+                    max={99} 
+                    valueLabelDisplay='on'
+                    defaultValue={50}
+                    onChange={changeProbabilityYes}
+                    marks />
             </div>
 
             <div className='Event__comments_container'>
