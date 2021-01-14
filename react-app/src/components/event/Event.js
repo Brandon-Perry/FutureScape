@@ -29,7 +29,6 @@ const Event = () => {
     
     useEffect(()=> {
         if (!eventInfo.predictions) return
-        console.log('hit second use effect')
         const listOfUsers = eventInfo.predictions.filter(prediction => {
             if (prediction.choice_id == 1) {
                 
@@ -54,7 +53,17 @@ const Event = () => {
 
     }, [eventInfo])
    
+    useEffect(() => {
+        if (!yesList || !noList) return
+        setPointsYes(calcScore(probabilityYes, yesList[yesList.length-1]))
+        setPointsNo(calcScore(probabilityNo, noList[noList.length-1]))
+    })
 
+
+
+    const calcScore = (currentValue, previousValue) => {
+        return Math.round(100 * Math.log2(currentValue/previousValue))
+    }
 
     const changeProbabilityYes = (e, newValue) => {
         
@@ -144,11 +153,11 @@ const Event = () => {
             </div>
 
             <div className='Event__user_prediction_container'>
-                {probabilityYes}
-                {probabilityNo}
-                {console.log(userList)}
-                {console.log(yesList)}
-                {console.log(noList)}
+                {/* {probabilityYes}
+                {probabilityNo} */}
+                {pointsYes}
+                {pointsNo}
+
                 <Slider 
                     step={1} 
                     min={1} 
