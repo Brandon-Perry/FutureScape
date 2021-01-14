@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import {useParams} from 'react-router-dom'
 import Slider from '@material-ui/core/Slider'
+import {createMuiTheme} from '@material-ui/core/styles'
+import {ThemeProvider} from '@material-ui/styles'
 
 import './Event.css'
 
@@ -59,6 +61,22 @@ const Event = () => {
         setPointsNo(calcScore(probabilityNo, noList[noList.length-1]))
     })
 
+    const muiTheme = createMuiTheme({
+        overrides: {
+            MuiSlider: {
+                thumb: {
+                    color: 'blue'
+                },
+                colorPrimary: {
+                    color: 'red'
+                },
+                track: {
+                    color: 'green'
+                }
+
+            }
+        }
+    })
 
 
     const calcScore = (currentValue, previousValue) => {
@@ -158,14 +176,18 @@ const Event = () => {
                 {pointsYes}
                 {pointsNo}
 
-                <Slider 
-                    step={1} 
-                    min={1} 
-                    max={99} 
-                    valueLabelDisplay='on'
-                    defaultValue={50}
-                    onChange={changeProbabilityYes}
-                    marks />
+                <ThemeProvider theme={muiTheme}>
+                    <Slider 
+                        className='Event__slider'
+                        step={1} 
+                        min={1} 
+                        max={99} 
+                        valueLabelDisplay='on'
+                        defaultValue={50}
+                        onChange={changeProbabilityYes}
+                        marks />
+
+                </ThemeProvider>
             </div>
 
             <div className='Event__comments_container'>
