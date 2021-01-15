@@ -21,6 +21,7 @@ const Event = () => {
     const [pointsYes, setPointsYes] = useState(null)
     const [pointsNo, setPointsNo] = useState(null)
     const eventInfo = useSelector((state) => state.currentEvent)
+    const userInfo = useSelector((state) => state.session.user)
     
     useEffect(() => {
         dispatch(currentEventActions.getCurrentEvent(eventId))
@@ -77,6 +78,33 @@ const Event = () => {
             }
         }
     })
+
+    const submitPrediction = async (e) => {
+        e.preventDefault()
+        const responseYes = await fetch('/api/predictions/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                'user_id': userInfo.id,
+                'event_id': eventInfo.id,
+                'choice_id': 1,
+                'probability': probabilityYes
+            })
+        })
+        const responseNo = await fetch('/api/predictions/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                'user_id': userInfo.id,
+                'event_id': eventInfo.id,
+                'choice_id': 2,
+                'probability': probabilityNo
+            })
+        })
+
+        console.log(responseYes)
+        console.log(responseNo)
+    }
 
 
     const calcScore = (currentValue, previousValue) => {
@@ -188,6 +216,9 @@ const Event = () => {
                         marks />
 
                 </ThemeProvider>
+            </div>
+            <div>
+                <button onClick={submitPrediction}>Submit</button>
             </div>
 
             <div className='Event__comments_container'>
