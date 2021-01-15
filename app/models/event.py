@@ -17,6 +17,36 @@ class Event(db.Model):
     payoff = db.Column(db.Integer, default=100)
     demo_event = db.Column(db.Boolean, default=False)
 
-    users = db.relationship('Prediction', back_populates='events')
+    predictions = db.relationship('Prediction', back_populates='events')
     category = db.relationship('Category', back_populates='events')
     comments = db.relationship('Comment', back_populates='event')
+
+    def to_dict_main_app(self):
+        return {
+            'id':self.id,
+            'title': self.title,
+            'description': self.description,
+            'expires': self.expires,
+            'resolved': self.resolved,
+            'outcome':self.outcome,
+            'category':self.category,
+            'payoff': self.payoff,
+            'demo_event': self.demo_event,
+            'predictions':self.predictions,
+            # 'comments':self.comments
+        }
+
+    def to_dict_full(self):
+        return {
+            'id':self.id,
+            'title': self.title,
+            'description': self.description,
+            'expires': self.expires,
+            'resolved': self.resolved,
+            'outcome':self.outcome,
+            'category':self.category,
+            'payoff': self.payoff,
+            'demo_event': self.demo_event,
+            'predictions':self.predictions,
+            'comments':self.comments
+        }

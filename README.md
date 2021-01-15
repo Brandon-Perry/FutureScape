@@ -82,3 +82,12 @@ UserComments <-- Displays the comments that a user has made and which events thi
 Event Creation page
 EventCreationContainer <-- Container for event creation
 EventCreationForm <-- Form for creating event
+
+
+Qustions to James
+-How to have state update whenever someone else initiates a call on a prediction? --Websockets 
+
+
+
+-React-infinite-scroller
+-React paginate
