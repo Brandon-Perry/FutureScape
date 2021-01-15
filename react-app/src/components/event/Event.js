@@ -81,29 +81,33 @@ const Event = () => {
 
     const submitPrediction = async (e) => {
         e.preventDefault()
-        const responseYes = await fetch('/api/predictions/', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                'user_id': userInfo.id,
-                'event_id': eventInfo.id,
-                'choice_id': 1,
-                'probability': probabilityYes
-            })
-        })
-        const responseNo = await fetch('/api/predictions/', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                'user_id': userInfo.id,
-                'event_id': eventInfo.id,
-                'choice_id': 2,
-                'probability': probabilityNo
-            })
-        })
+        // const responseYes = await fetch('/api/predictions/', {
+        //     method: 'POST',
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: JSON.stringify({
+        //         'user_id': userInfo.id,
+        //         'event_id': eventInfo.id,
+        //         'choice_id': 1,
+        //         'probability': probabilityYes
+        //     })
+        // })
+        // const responseNo = await fetch('/api/predictions/', {
+        //     method: 'POST',
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: JSON.stringify({
+        //         'user_id': userInfo.id,
+        //         'event_id': eventInfo.id,
+        //         'choice_id': 2,
+        //         'probability': probabilityNo
+        //     })
+        // })
 
-        console.log(responseYes)
-        console.log(responseNo)
+        dispatch(currentEventActions.addAndUpdatePredictions(
+            userInfo.id,
+            eventInfo.id,
+            probabilityYes,
+            probabilityNo
+        ))
     }
 
 
