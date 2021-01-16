@@ -1,5 +1,6 @@
 const GET_EVENT = 'event'
 const ADD_PREDICTIONS = 'update-predictions'
+const ADD_COMMENT = 'update-comment'
 
 const setCurrentEvent = (event) => {
     return {type: GET_EVENT, payload: event}
@@ -7,6 +8,10 @@ const setCurrentEvent = (event) => {
 
 const addPredictions = (predictions) => {
     return {type: ADD_PREDICTIONS, payload: predictions}
+}
+
+const addComment = (comments) => {
+    return {type: ADD_COMMENT, payload: comments}
 }
 
 export const getCurrentEvent = (id) => async(dispatch) =>{
@@ -44,6 +49,19 @@ export const addAndUpdatePredictions = (user_id, event_id, probabilityYes, proba
     const latestPredictions = resPredictions['predictions']
 
     dispatch(addPredictions(latestPredictions))
+}
+
+export const addAndUpdateComments = (user_id, event_id, comment) => async(dispatch) => {
+    const response = await fetch('/api/comments/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            'user_id':user_id,
+            'event_id':event_id,
+            'comment': comment
+        })
+    })
+    const resJSon = response.json()
 }
 
 // const initialState = {event: null}

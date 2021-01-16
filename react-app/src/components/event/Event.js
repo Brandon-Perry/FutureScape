@@ -20,6 +20,7 @@ const Event = () => {
     const [noList, setNoList] = useState(null)
     const [pointsYes, setPointsYes] = useState(null)
     const [pointsNo, setPointsNo] = useState(null)
+    const [commentText, setCommentText] = useState('')
     const eventInfo = useSelector((state) => state.currentEvent)
     const userInfo = useSelector((state) => state.session.user)
     
@@ -102,6 +103,12 @@ const Event = () => {
         setProbabilityNo(100 - newValue)
     }
 
+    const updateCommentText = (e) => {
+        e.preventDefault()
+
+        setCommentText(e.target.value)
+    }
+
 
 
     const displayComment = (comment) => {
@@ -153,6 +160,15 @@ const Event = () => {
             )
             
         })
+    }
+
+    const submitComment = (e) => {
+        e.preventDefault()
+        if (commentText !== '') {
+            dispatch(currentEventActions.addAndUpdateComments(userInfo.id, eventInfo.id, commentText))
+        } else {
+            return
+        }
     }
     
     return (
@@ -210,6 +226,8 @@ const Event = () => {
                 {eventInfo.comments ? eventInfo.comments.map((comment) => {
                     return displayComment(comment)
                 }) : null}
+                <input type='text' onChange={updateCommentText} placeholder='type here' />
+                <button onClick={submitComment}>Post Comment</button>
             </div>
 
         </div>
