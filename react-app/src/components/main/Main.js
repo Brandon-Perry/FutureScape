@@ -31,6 +31,7 @@ const Main = () => {
             dispatch(eventActions.allEvents())
             const response = await fetch('/api/categories/')
             const resJson = await response.json()
+            console.log(resJson)
             const names = resJson['categories'].map(el => {
                 return el.name
             })
