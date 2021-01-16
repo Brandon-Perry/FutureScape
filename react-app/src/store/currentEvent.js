@@ -61,7 +61,10 @@ export const addAndUpdateComments = (user_id, event_id, comment) => async(dispat
             'comment': comment
         })
     })
-    const resJSon = response.json()
+    const resJson = await response.json()
+    const latestComments = resJson['comments']
+
+    dispatch(addComment(latestComments))
 }
 
 // const initialState = {event: null}
@@ -78,6 +81,11 @@ const currentEventReducer = (state = {}, action) => {
         case ADD_PREDICTIONS:
             new_state = Object.assign({}, state)
             new_state.predictions = action.payload
+            return new_state
+
+        case ADD_COMMENT:
+            new_state = Object.assign({}, state)
+            new_state.comments = action.payload
             return new_state
 
         default:
