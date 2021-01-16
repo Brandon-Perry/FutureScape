@@ -13,6 +13,7 @@ import SplashPage from './components/splashpage/splashpage'
 import NavBar from './components/NavBar'
 import Main from './components/main/Main'
 import Event from './components/event/Event'
+import CreateEvent from './components/createEvent/CreateEvent'
 
 //STORE
 import {authenticate} from './store/session'
@@ -49,6 +50,10 @@ function App() {
 			<Route exact path='/event/:eventId'>
 				<NavBar />
 				<Event />
+			</Route>
+			<Route exact path='/create_event'>
+				<NavBar />
+				<CreateEvent />
 			</Route>
 		</Switch>
 	  </BrowserRouter>

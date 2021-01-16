@@ -1,0 +1,13 @@
+.createEvent__container {
+    margin-left: 0 auto;
+    margin-right: 0 auto;
+    position: fixed;
+    top: 100px;
+    bottom: 25px;
+    left: 25%;
+    right: 25%;
+    width: 50%;
+    border: 2px solid blue;
+    border-radius: 20px;
+
+}
