@@ -23,22 +23,29 @@ const CreateEvent = () => {
         (async() => {
             const response = await fetch('/api/categories/')
             const resJson = await response.json()
-            const names = resJson['categories'].map(el => {
-                return el.name
+            // console.log(resJson)
+            let categoryObjs = resJson.categories.filter(category => {
+                if (category.name !== 'All') {
+                    return category
+                }
             })
-            setCategories([...names])
-            console.log(categories)
+            setCategories(categoryObjs)
+            // console.log(categories)
+            setSelectedCategory(categoryObjs[0].id)
 
             
         })()
     }, [])
 
-    const makeItem = (el) => {
-        return <option key={el} value={el}>{el}</option>
+    const makeItem = (el, id) => {
+        return <option key={id} value={id}>{el}</option>
     }
 
     const updateSelectedCategory = (e) => {
-        setSelectedCategory(e.target.value)
+        const index = e.target.selectedIndex;
+        const element = e.target.childNodes[index]
+        const elementValue = element.getAttribute('value')
+        setSelectedCategory(elementValue)
     }
     
 
@@ -63,6 +70,13 @@ const CreateEvent = () => {
 
         return tomorrow.toISOString()
         //Doesn't seem to work, will come back to
+    }
+
+    const submitEvent = (e) => {
+        e.preventDefault()
+
+        
+
     }
     
     return (
@@ -99,10 +113,10 @@ const CreateEvent = () => {
                     />
                 </Grid>
             </MuiPickersUtilsProvider>
-            <select name='categories' value={selectedCategory} onChange={updateSelectedCategory}>
-                        {Object.values(categories).map(el => {
-                            return makeItem(el)
-                        })}
+            <select name='categories' onChange={updateSelectedCategory}>
+                        {categories ? categories.map(el => {
+                            return makeItem(el.name, el.id)
+                        }) : null}
                     </select>
 
             </form>
