@@ -55,6 +55,8 @@ const Event = () => {
         })
         setNoList(listOfNo.map(prediction => prediction.probability))
 
+        setInterval(()=> checkTimes(), 60000)
+
     }, [eventInfo])
    
     useEffect(() => {
@@ -62,6 +64,19 @@ const Event = () => {
         setPointsYes(calcScore(probabilityYes, yesList[yesList.length-1]))
         setPointsNo(calcScore(probabilityNo, noList[noList.length-1]))
     })
+
+    const checkTimes = () => {
+        console.log('hit checkTimes')
+
+        const is_expired = eventInfo.resolved
+        if (is_expired) return
+        
+        const now = new Date()
+        if (now.getTime() >= new Date(eventInfo.expires).getTime()) {
+            dispatch(currentEventActions.resolveAndUpdateEvent([eventInfo.id]))
+        } 
+
+    }
 
     const muiTheme = createMuiTheme({
         overrides: {

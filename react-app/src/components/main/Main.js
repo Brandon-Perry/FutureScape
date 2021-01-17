@@ -27,6 +27,8 @@ const Main = () => {
     }
 
     const checkTimes = () => {
+        console.log('hit checkTimes')
+        if (!events) return
         const now = new Date()
 
         const unresolved_events = events.filter(event => !event.resolved)
@@ -51,6 +53,7 @@ const Main = () => {
     useEffect(() => {
         (async() => {
             dispatch(eventActions.allEvents())
+                
             const response = await fetch('/api/categories/')
             const resJson = await response.json()
             const names = resJson['categories'].map(el => {
@@ -59,6 +62,12 @@ const Main = () => {
             setCategories([...names])
 
             setLoaded(true)
+
+
+            
+            setInterval(() => checkTimes(), 60000)
+            
+           
             
         })()
     }, [])

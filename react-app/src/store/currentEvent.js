@@ -67,6 +67,21 @@ export const addAndUpdateComments = (user_id, event_id, comment) => async(dispat
     dispatch(addComment(latestComments))
 }
 
+export const resolveAndUpdateEvent = (event_ids) => async(dispatch) => {
+    const response = await fetch('/api/events/resolve', {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+            'event_ids':event_ids,
+            'return_all_events': false
+        })
+    })
+
+    const resJson = await response.json()
+
+    dispatch(setCurrentEvent(event_ids[0]))
+}
+
 // const initialState = {event: null}
 
 const currentEventReducer = (state = {}, action) => {
