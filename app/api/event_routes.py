@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
+import math
 
-from ..models import Event, db 
+from ..models import Event, db, User
 from .helperFunctions import unpack_category, unpack_choice_from_predictions, unpack_predictions, unpack_users_from_comments, unpack_users_from_predictions
 from ..forms.event_creation_form import CreateEventForm
 
@@ -95,6 +96,39 @@ def resolve_events():
         data = get_event(event_ids[0])
         return data
 
+@event_routes.route('/<event_id>/score/<choice_id>', methods=['POST'])
+def handle_scores(event_id, choice_id):
+
+    event = Event.query.get(event_id)
+
+    chosen_predictions = [prediction for prediction in event.predictions if prediction.choice_id == choice_id]
+
+    score_dict = {}
+
+    for prediction in chosen_predictions:
+        score = None
+        if chosen_predictions.index(prediction) == 0:
+            score = scoring_function(prediction.probability, 50)
+        else:
+            previous_index = chosen_predictions.index(prediction) - 1
+            previous_prediction = chosen_predictions[previous_index]
+            score = scoring_function(prediction.probability, previous_prediction.probability)
+        
+        if prediction.id not in score_dict:
+            score_dict[prediction.id] = score 
+        else:
+            new_score = score_dict.get(prediction.id) + score
+            score_dict.update({prediction.id: new_score })
+
+    for user_id in score_dict.keys():
+        current_user = User.query.get(user_id)
+        new_score = current_user.score + score_dict[user_id]
+        current_user.score = new_score
+        db.session.commit()
+        
+
+
+
 
 def validation_errors_to_error_messages(validation_errors):
     errorMessages = []
@@ -102,3 +136,7 @@ def validation_errors_to_error_messages(validation_errors):
         for error in validation_errors[field]:
             errorMessages.append(f'{field} : {error}')
     return errorMessages
+
+
+def scoring_function(current_probability, previous_probability):
+    return round(100 * math.log2(current_probability/previous_probability))
