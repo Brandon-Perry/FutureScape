@@ -96,36 +96,67 @@ def resolve_events():
         data = get_event(event_ids[0])
         return data
 
-@event_routes.route('/<event_id>/score/<choice_id>', methods=['POST'])
+@event_routes.route('/<event_id>/score/<choice_id>', methods=['PUT'])
 def handle_scores(event_id, choice_id):
 
-    event = Event.query.get(event_id)
+    # print('--------')
+    # print('hit handle_scores route')
+    # print('--------')
 
-    chosen_predictions = [prediction for prediction in event.predictions if prediction.choice_id == choice_id]
+    event = Event.query.get(event_id)
+    # print('--------')
+    # print('event', event.predictions)
+    # print('--------')
+
+    predictions = [prediction.to_dict() for prediction in event.predictions]
+    # print('--------')
+    # print(predictions)
+    # print('--------')
+
+    # print('--------')
+    # print('choice_id', type(choice_id))
+    # print('--------')
+
+    chosen_predictions = [prediction for prediction in predictions if prediction['choice_id']== int(choice_id)]
+    # print('--------')
+    # print('chosen_predictions', chosen_predictions)
+    # print('--------')
 
     score_dict = {}
 
     for prediction in chosen_predictions:
+        # print('--------')
+        # print(prediction)
+        # print('--------')
         score = None
         if chosen_predictions.index(prediction) == 0:
-            score = scoring_function(prediction.probability, 50)
+            score = scoring_function(prediction['probability'], 50)
         else:
             previous_index = chosen_predictions.index(prediction) - 1
             previous_prediction = chosen_predictions[previous_index]
-            score = scoring_function(prediction.probability, previous_prediction.probability)
+            score = scoring_function(prediction['probability'], previous_prediction['probability'])
         
-        if prediction.id not in score_dict:
-            score_dict[prediction.id] = score 
+        if prediction['user_id'] not in score_dict:
+            score_dict[prediction['user_id']] = score 
         else:
-            new_score = score_dict.get(prediction.id) + score
-            score_dict.update({prediction.id: new_score })
+            new_score = score_dict.get(prediction['user_id']) + score
+            score_dict.update({prediction['user_id']: new_score })
+
+    # print('--------')
+    # print('score_dict',score_dict)
+    # print('--------')
 
     for user_id in score_dict.keys():
         current_user = User.query.get(user_id)
-        new_score = current_user.score + score_dict[user_id]
-        current_user.score = new_score
+        # current_user = current_user.to_dict()
+        new_score = current_user.points + score_dict[user_id]
+        current_user.points = new_score
+        # print('--------')
+        # print('current_user.score',current_user.points)
+        # print('--------')
         db.session.commit()
         
+    return {'success':'yes'}
 
 
 

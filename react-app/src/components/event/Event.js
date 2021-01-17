@@ -194,6 +194,20 @@ const Event = () => {
             return
         }
     }
+
+    const scorePredictions = async() => {
+        const response = await fetch(`/api/events/${eventInfo.id}/score/1`, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'nothing needed':null
+            })
+        })
+
+        const resJson = await response.json()
+        console.log(resJson)
+
+    }
     
     return (
         <div className='Event__container'>
@@ -246,6 +260,8 @@ const Event = () => {
             <div>
                 <button disabled={disableIfExpired} onClick={submitPrediction}>Submit</button>
             </div>
+
+            <div><button onClick={scorePredictions}>Score Predictions</button></div>
 
             <div className='Event__comments_container'>
                 {eventInfo.comments ? eventInfo.comments.map((comment) => {
