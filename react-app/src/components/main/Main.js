@@ -65,12 +65,13 @@ const Main = () => {
 
 
             
-            setInterval(() => checkTimes(), 60000)
             
+            setInterval(() => checkTimes(), 60000)
            
             
         })()
     }, [])
+    
 
     const makeItem = (el) => {
         return <option key={el} value={el}>{el}</option>

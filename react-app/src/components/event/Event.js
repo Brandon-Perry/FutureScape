@@ -55,6 +55,7 @@ const Event = () => {
         })
         setNoList(listOfNo.map(prediction => prediction.probability))
 
+        checkTimes()
         setInterval(()=> checkTimes(), 60000)
 
     }, [eventInfo])
@@ -94,6 +95,14 @@ const Event = () => {
             }
         }
     })
+
+    const disableIfExpired = () => {
+        if (eventInfo.resolved) {
+            return true
+        } else {
+            return false
+        }
+    }
 
     const submitPrediction = async (e) => {
         e.preventDefault()
@@ -229,12 +238,13 @@ const Event = () => {
                         valueLabelDisplay='on'
                         defaultValue={50}
                         onChange={changeProbabilityYes}
+                        disabled={disableIfExpired}
                         marks />
 
                 </ThemeProvider>
             </div>
             <div>
-                <button onClick={submitPrediction}>Submit</button>
+                <button disabled={disableIfExpired} onClick={submitPrediction}>Submit</button>
             </div>
 
             <div className='Event__comments_container'>
