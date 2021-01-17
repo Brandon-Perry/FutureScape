@@ -21,7 +21,7 @@ const MainEvent = ({event}) => {
             </div>
 
             <div className='Main__event_resolved'>
-                {event.resolved ? <p>Unresolved</p> : <p>Resolved</p>}
+                {event.resolved ? <p>Resolved</p> : <p>Unresolved</p>}
             </div>
 
         </div>

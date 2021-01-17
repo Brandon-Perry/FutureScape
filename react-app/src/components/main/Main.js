@@ -26,12 +26,33 @@ const Main = () => {
         setSortBy(e.target.value)
     }
 
+    const checkTimes = () => {
+        const now = new Date()
+
+        const unresolved_events = events.filter(event => !event.resolved)
+
+        const toResolveEvents = unresolved_events.filter(event => {
+            if (now.getTime() >= new Date(event.expires).getTime()) {
+                return event
+            }
+        })
+
+        if (toResolveEvents) {
+            
+            let event_ids = []
+            toResolveEvents.forEach(event => event_ids.push(event.id))
+            console.log(event_ids)
+    
+            dispatch(eventActions.resolveAndUpdateEvents(event_ids))
+        }
+
+    }
+
     useEffect(() => {
         (async() => {
             dispatch(eventActions.allEvents())
             const response = await fetch('/api/categories/')
             const resJson = await response.json()
-            console.log(resJson)
             const names = resJson['categories'].map(el => {
                 return el.name
             })
@@ -89,6 +110,7 @@ const Main = () => {
 
 
             <div className='Main__events_container'>
+                <button onClick={checkTimes}>Test checkTimes</button>
                 {events ? events.map((el) => (
                     <MainEvent event={el} />
                 )) : null}

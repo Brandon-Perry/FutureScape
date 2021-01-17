@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Redirect} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
 import TextField from '@material-ui/core/TextField'
 import MomentUtils from '@date-io/moment';
 import Moment from 'moment'
-import {KeyboardDatePicker, KeyboardDateTimePicker, KeyboardTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers'
+import {KeyboardDateTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers'
 import Grid from '@material-ui/core/Grid'
 
 import './CreateEvent.css'
@@ -18,6 +18,8 @@ const CreateEvent = () => {
     const [expires, setExpires] = useState(null)
     const [categories, setCategories] = useState('')
     const [selectedCategory, setSelectedCategory] = useState(null)
+
+    let history = useHistory()
 
     useEffect(() => {
         (async() => {
@@ -58,8 +60,9 @@ const CreateEvent = () => {
     }
 
     const updateExpires = (date, value) => {
-        // console.log(date.toISOString())
+        // console.log(date)
         setExpires(date.toISOString())
+        console.log(Date(date))
         // console.log(new Date(expires))
     }
 
@@ -72,9 +75,26 @@ const CreateEvent = () => {
         //Doesn't seem to work, will come back to
     }
 
-    const submitEvent = (e) => {
+    const submitEvent = async (e) => {
         e.preventDefault()
+        console.log(expires)
 
+        const response = await fetch('/api/events/', {
+            method:'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                'title': title,
+                'description': description,
+                'expires': expires,
+                'category_id':selectedCategory
+            })
+        })
+
+        const resJson = await response.json()
+        if (response.ok) {
+            
+            history.push(`/event/${resJson.id}`)
+        }
         
 
     }
@@ -120,7 +140,7 @@ const CreateEvent = () => {
                     </select>
 
             </form>
-            <button>Submit</button>
+            <button onClick={submitEvent}>Submit</button>
         </div>
     )
     
