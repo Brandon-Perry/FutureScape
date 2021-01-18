@@ -60,18 +60,18 @@ def seed_all():
 
         
         event1 = Event(title='Will Donald Trump be Tried and Convicted by the Senate by April?', description='Will the United States Senate successfully convict former President Donald J. Trump of the Capitol Riots impeachment charges brought before the House of Representatives by April 1st at midnight Eastern Standard Time? Event resolves either when the Senate convicts Trump, if the Senate acquits Trump, or by the aforementioned date',
-                expires=datetime.datetime(2021, 4, 1, 0, 0, 0), category_id=3)
+                expires=datetime.datetime(2021, 4, 1, 0, 0, 0), category_id=3, created_at=datetime.datetime(2021, 1, 7, 0, 0, 0))
         event2 = Event(title='Will the Price of Bitcoin exceed $50,000 USD on February 1st?', description='As of February 1st UTC, will the market price of Bitcoin (as reported by CoinBase) exceed $50,000 USD? The event ends on February 1st UTC and will not resolve prior to then, even if Bitcoin prices go above $50,000.',
-                expires=datetime.datetime(2021, 2, 1, 0, 0, 0), category_id=7)
+                expires=datetime.datetime(2021, 2, 1, 0, 0, 0), category_id=7, created_at=datetime.datetime(2021, 1, 5, 0, 0, 0))
         event3 = Event(title='Will Tesla Announce a New Car Model by End of Year?', description='By end of year UTC, will Tesla make an announcement regarding a new car model? This does not include new versions of previous models such as the Model Y or Roadster. This event ends either when a new model is announced, or on January 1st 2022 UTC',
-                expires=datetime.datetime(2022, 1, 1, 0, 0, 0), category_id=6)
+                expires=datetime.datetime(2022, 1, 1, 0, 0, 0), category_id=6, created_at=datetime.datetime(2021, 1, 7, 0, 0, 0))
         event4 = Event(title='Will the Biden Administration rejoin the Paris Agreement by End of its First Month in Power?', description='By February 18th, will the United States rejoin the Paris Agreement? Event ends either when the United States has rejoined, or at February 18th.',
-                expires=datetime.datetime(2021, 2, 18, 0, 0, 0), category_id=5)
+                expires=datetime.datetime(2021, 2, 18, 0, 0, 0), category_id=5, created_at=datetime.datetime(2021, 1, 17, 0, 0, 0))
         event5 = Event(title='Will There Be a Conflict Between the United States and China in the South China Sea That Results in At Least One Death by End of Year?', description='The South China Sea is a contested space between the United States and China, with China claiming it as its own territory, and the United States engaging in freedom of navigation excersizes. Conflict is defined either as in fighting or some form of violence. This event ends either when one death has occured because of conflict between the two nations, or on January 1st, 2022 UTC',
-                expires=datetime.datetime(2022, 1, 1, 0, 0, 0), category_id=4)
+                expires=datetime.datetime(2022, 1, 1, 0, 0, 0), category_id=4, created_at=datetime.datetime(2021, 1, 18, 0, 0, 0))
         event6 = Event(title='Will This Event Resolve as True?', description='This is a demo event', expires=datetime.datetime(2021, 1, 15, 15, 0, 0), category_id=8, demo_event=True)
         event7 = Event(title="Will Deepmind's AlphaFold achieve at least a 90 GDT on the 14th CASP Assessment?", description="Casp is an organization that's dedicated to tracking improvements on the protein folding grand challenge. During its upcoming 14th assessment, will DeepMind's AlphaFold achieve at least a 90 on its median GDT score?",
-                expires=datetime.datetime(2020,11,30,0,0,0), category_id=2)
+                expires=datetime.datetime(2020,11,30,0,0,0), category_id=2, created_at=datetime.datetime(2020, 1, 1, 0, 0, 0))
 
         db.session.add(event1)
         db.session.add(event2)

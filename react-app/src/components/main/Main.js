@@ -11,7 +11,7 @@ const Main = () => {
     const [showOnlyUnresolved, setShowOnlyUnresolved] = useState(false)
     const [sortBy, setSortBy] = useState('popular')
     const [categories, setCategories] = useState('None')
-    const [filterCategory, setFilterCategory] = useState(null)
+    const [filterCategory, setFilterCategory] = useState('All')
     const [searchTerm, setSearchTerm] = useState(null)
     const [loaded, setLoaded] = useState(false)
     const [eventsDisplay, setEventsDisplay] = useState(null)
@@ -64,16 +64,21 @@ const Main = () => {
 
             setLoaded(true)
 
-
-            
-            
             setInterval(() => checkTimes(), 60000)
            
             
         })()
     }, [])
+
+    useEffect(() => {
+        displayFilter()
+    }, [events, filterCategory, searchTerm, sortBy, showOnlyUnresolved])
+
+
     
-    const displayFilter = () => {   
+    const displayFilter = () => {
+        
+        if (!events) return
 
         let sortedEvents = null
 
@@ -117,7 +122,32 @@ const Main = () => {
                 return timeElapsedA - timeElapsedB
             })
         }
-        
+
+        if (filterCategory !== 'All') {
+
+            sortedEvents = sortedEvents.filter(event => {
+                if (event.category.name === filterCategory) {
+                    return event
+                }
+            })
+        }
+
+        if (showOnlyUnresolved) {
+            sortedEvents = sortedEvents.filter(event => {
+                if (!event.resolved) {
+                    return event
+                }
+            })
+        }
+
+        if (searchTerm) {
+            sortedEvents = sortedEvents.filter(event => {
+                if (event.title.includes(searchTerm) || event.description.includes(searchTerm)) {
+                    return event
+                }
+            })
+        }
+        setEventsDisplay(sortedEvents)
         
 
     }
@@ -174,8 +204,7 @@ const Main = () => {
 
 
             <div className='Main__events_container'>
-                <button onClick={displayFilter}>Test display</button>
-                {events ? events.map((el) => (
+                {eventsDisplay ? eventsDisplay.map((el) => (
                     <MainEvent event={el} />
                 )) : null}
             </div>
