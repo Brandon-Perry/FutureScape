@@ -55,3 +55,26 @@
     justify-content: space-between;
 }
 
+.Main__event_title {
+    width: 50%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #007feb
+}
+
+.Main__event_title a:link {
+    text-decoration: none;
+}
+
+.Main__event_title a:visited {
+    color: #007feb
+}
+
+
+.Main__event_yes {
+    color: green;
+}
+
+.Main__event_no {
+    color: red;
+}
