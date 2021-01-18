@@ -14,9 +14,9 @@ def get_all_events():
     data = [event.to_dict_main_app() for event in events]
     data = unpack_predictions(data)
     data = unpack_category(data)
-    # print('---------------')
-    # print(data)
-    # print('----------------')
+    print('---------------')
+    print(data)
+    print('----------------')
     return jsonify(data)
 
 

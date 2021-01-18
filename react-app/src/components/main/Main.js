@@ -14,6 +14,7 @@ const Main = () => {
     const [filterCategory, setFilterCategory] = useState(null)
     const [searchTerm, setSearchTerm] = useState(null)
     const [loaded, setLoaded] = useState(false)
+    const [eventsDisplay, setEventsDisplay] = useState(null)
     const events = useSelector((state) => state.events.events)
 
     const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const Main = () => {
         const unresolved_events = events.filter(event => !event.resolved)
 
         const toResolveEvents = unresolved_events.filter(event => {
-            if (now.getTime() >= new Date(event.expires).getTime()) {
+            if (now.getTime() >= new Date(event.expires).getTime() && !event.resolved) {
                 return event
             }
         })
@@ -72,6 +73,59 @@ const Main = () => {
         })()
     }, [])
     
+    const displayFilter = () => {   
+
+        let sortedEvents = null
+
+        if (sortBy === 'popular') {
+
+            sortedEvents = events.sort((a,b) => {
+                const created_atA = new Date(a['created_at'])
+                const created_atB = new Date(b['created_at'])
+                const timeElapsedA = Date.now() - created_atA.getTime()
+                
+                const scoreA = a.predictions.length / Math.log(timeElapsedA)
+                const timeElapsedB = Date.now() - created_atB.getTime()
+                const scoreB = b.predictions.length / Math.log(timeElapsedB)
+                
+                return scoreB - scoreA
+            })
+        }
+
+        if (sortBy === 'recent') {
+
+            sortedEvents = events.sort((a,b) => {
+                const created_atA = new Date(a['created_at'])
+                const created_atB = new Date(b['created_at'])
+                const timeElapsedA = Date.now() - created_atA.getTime()
+                
+                const timeElapsedB = Date.now() - created_atB.getTime()
+                
+                return timeElapsedB - timeElapsedA
+            })
+        }
+
+        if (sortBy === 'oldest') {
+
+            sortedEvents = events.sort((a,b) => {
+                const created_atA = new Date(a['created_at'])
+                const created_atB = new Date(b['created_at'])
+                const timeElapsedA = Date.now() - created_atA.getTime()
+                
+                const timeElapsedB = Date.now() - created_atB.getTime()
+                
+                return timeElapsedA - timeElapsedB
+            })
+        }
+        
+        
+
+    }
+  
+  
+        
+  
+
 
     const makeItem = (el) => {
         return <option key={el} value={el}>{el}</option>
@@ -120,7 +174,7 @@ const Main = () => {
 
 
             <div className='Main__events_container'>
-                <button onClick={checkTimes}>Test checkTimes</button>
+                <button onClick={displayFilter}>Test display</button>
                 {events ? events.map((el) => (
                     <MainEvent event={el} />
                 )) : null}

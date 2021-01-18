@@ -16,7 +16,7 @@ class Event(db.Model):
     outcome = db.Column(db.String, default=None)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     demo_event = db.Column(db.Boolean, default=False)
-    create_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
     
 
     predictions = db.relationship('Prediction', back_populates='events')
@@ -34,7 +34,7 @@ class Event(db.Model):
             'category':self.category,
             'demo_event': self.demo_event,
             'predictions':self.predictions,
-            'create_at': self.create_at
+            'created_at': self.created_at
             # 'comments':self.comments
         }
 
@@ -50,5 +50,5 @@ class Event(db.Model):
             'demo_event': self.demo_event,
             'predictions':self.predictions,
             'comments':self.comments,
-            'create_at': self.create_at
+            'created_at': self.created_at
         }
