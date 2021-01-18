@@ -1,7 +1,8 @@
-from .db import db
 from sqlalchemy.orm import relationship
-# from .prediction import predictions
-# from .comments import comments
+
+from .db import db
+import datetime
+
 
 class Event(db.Model):
 
@@ -14,8 +15,9 @@ class Event(db.Model):
     resolved = db.Column(db.Boolean, default=False)
     outcome = db.Column(db.String, default=None)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    payoff = db.Column(db.Integer, default=100)
     demo_event = db.Column(db.Boolean, default=False)
+    create_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
+    
 
     predictions = db.relationship('Prediction', back_populates='events')
     category = db.relationship('Category', back_populates='events')
@@ -30,9 +32,9 @@ class Event(db.Model):
             'resolved': self.resolved,
             'outcome':self.outcome,
             'category':self.category,
-            'payoff': self.payoff,
             'demo_event': self.demo_event,
             'predictions':self.predictions,
+            'create_at': self.create_at
             # 'comments':self.comments
         }
 
@@ -45,8 +47,8 @@ class Event(db.Model):
             'resolved': self.resolved,
             'outcome':self.outcome,
             'category':self.category,
-            'payoff': self.payoff,
             'demo_event': self.demo_event,
             'predictions':self.predictions,
-            'comments':self.comments
+            'comments':self.comments,
+            'create_at': self.create_at
         }

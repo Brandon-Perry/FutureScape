@@ -17,6 +17,7 @@ werkzeug = "*"
 flask-cors = "*"
 pyjwt = "*"
 pylint = "*"
+faker = "*"
 
 [dev-packages]
 psycopg2-binary = "*"
