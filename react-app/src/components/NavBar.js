@@ -8,19 +8,21 @@ import { Link, Redirect } from 'react-router-dom';
 
 
 const NavBar = () => {
-    const currentUserName = useSelector((state) => state.session.user.username)
+    const currentUser= useSelector((state) => state.session.user)
     
     return(
         <div className='NavBar__container'>
-            <div className='NavBar__logo'>
-                Logo
-            </div>
+            <Link to='/app'>
+                <div className='NavBar__logo'>
+                    <img src={require('../assets/logo_nav.png')} />
+                </div>
+            </Link>
             <div className='NavBar__user_logout_container'>
                 <div className='NavBar__create_event'>
                     <Link to='/create_event'>Create Event</Link>
                 </div>
                 <div className='NavBar__user'>
-                    {currentUserName}
+                    <p>{currentUser.username}: {currentUser.points}</p>
                 </div>
                 <div className='NavBar__logout'>
                     <LogoutButton />

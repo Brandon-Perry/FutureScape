@@ -62,8 +62,13 @@ const Event = () => {
    
     useEffect(() => {
         if (!yesList || !noList) return
-        setPointsYes(calcScore(probabilityYes, yesList[yesList.length-1]))
-        setPointsNo(calcScore(probabilityNo, noList[noList.length-1]))
+        if (eventInfo.predictions.length === 0) {
+            setPointsYes(calcScore(probabilityYes, 50))
+            setPointsNo(calcScore(probabilityNo, 50))
+        } else {
+            setPointsYes(calcScore(probabilityYes, yesList[yesList.length-1]))
+            setPointsNo(calcScore(probabilityNo, noList[noList.length-1]))
+        }
     })
 
     const checkTimes = () => {
@@ -219,21 +224,31 @@ const Event = () => {
 
             <div className='Event__predictions_container'>
                 <div className='Event__prediction_username_container'>
+                    <div className='Event__prediction_username'>
+                        <p>HOUSE</p>
+                    </div>
                     {userList ? displayUsernamePredictions() : null}
                 </div>
                 <div className='Event__prediction_yes_container'>
+                    <div className='Event__prediction_yes'>
+                        <p>50</p>
+                    </div>
                     {yesList ? displayYesPredictions() : null}
                 </div>
                 <div className='Event__prediction_no_container'>
+                    <div className='Event__prediction_yes'>
+                        <p>50</p>
+                    </div>
                     {noList ? displayNoPredictions() : null}
                 </div>
             </div>
 
             <div className='Event__user_prediction_container'>
-                {/* {probabilityYes}
-                {probabilityNo} */}
-                {pointsYes}
-                {pointsNo}
+                <div className='Event__yes_no_points'>
+                    <div><p>{pointsYes} points if event resolves <span className='Event__yespoints'>Yes</span></p></div>
+                    <div><p>{pointsNo} points if event resolves <span className='Event__nopoints'>No</span></p></div>
+
+                </div>
 
                 <ThemeProvider theme={muiTheme}>
                     <Slider 

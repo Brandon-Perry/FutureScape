@@ -55,3 +55,16 @@
 }
 
 
+.Event__yes_no_points {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+}
+
+.Event__yespoints {
+    color: green;
+}
+
+.Event__nopoints {
+    color: red;
+}
