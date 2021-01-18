@@ -50,16 +50,20 @@
 
 
 .Main__event {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto 200px 50px 100px;
+    grid-template-rows: auto;
+    gap: 10px;
 }
 
 .Main__event_title {
-    width: 50%;
+    grid-column-start: 1;
+    grid-row-start: 1;
     margin-top: 5px;
     margin-bottom: 5px;
-    color: #007feb
+    color: #007feb;
+    /* background-color: black; */
+    width: 100%;
 }
 
 .Main__event_title a:link {
@@ -68,6 +72,34 @@
 
 .Main__event_title a:visited {
     color: #007feb
+}
+
+.Main__event_graph {
+    display: flex;
+    grid-column-start: 2;
+    grid-row-start: 1;
+    align-items: center;
+    justify-content: center;
+    /* background-color: blue */
+}
+
+.Main__event_current_predictions {
+    display: flex;
+    grid-column-start: 3;
+    grid-row-start: 1;
+    text-align: center;
+    /* background-color: red */
+    align-items: center;
+}
+
+.Main__event_resolved {
+    display: flex;
+    grid-column-start: 4;
+    grid-row-start: 1;
+    /* background-color: green; */
+    align-items: center;
+    text-align: end;
+    justify-content: flex-end;
 }
 
 
