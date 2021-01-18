@@ -96,14 +96,6 @@ const Event = () => {
         }
     })
 
-    const disableIfExpired = () => {
-        if (eventInfo.resolved) {
-            return true
-        } else {
-            return false
-        }
-    }
-
     const submitPrediction = async (e) => {
         e.preventDefault()
         
@@ -252,13 +244,13 @@ const Event = () => {
                         valueLabelDisplay='on'
                         defaultValue={50}
                         onChange={changeProbabilityYes}
-                        disabled={disableIfExpired}
+                        disabled={eventInfo.resolved}
                         marks />
 
                 </ThemeProvider>
             </div>
             <div>
-                <button disabled={disableIfExpired} onClick={submitPrediction}>Submit</button>
+                <button disabled={eventInfo.resolved} onClick={submitPrediction}>Submit</button>
             </div>
 
             <div><button onClick={scorePredictions}>Score Predictions</button></div>
