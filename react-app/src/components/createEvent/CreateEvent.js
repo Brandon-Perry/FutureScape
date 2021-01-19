@@ -106,41 +106,43 @@ const CreateEvent = () => {
                 value={title}
                 onChange={updateTitle}
                 placeholder='Event Title'
-            />
-            <input
-                type='text'
-                value={description}
-                onChange={updateDescription}
-                placeholder='Describe Your Event in Detail'
-            />
-            
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-                <Grid container justify="space-around">
-                    <KeyboardDateTimePicker
-                        disableToolbar
-                        variant="inline"
-                        format="MM/dd/yyyy"
-                        margin="normal"
-                        id="date-picker-inline"
-                        label="Pick Date and Time for Event to Expire"
-                        disablePast={true}
-                        maxDate={returnTomorrowDate}
-                        value={expires}
-                        onChange={updateExpires}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                    }}
-                    />
-                </Grid>
-            </MuiPickersUtilsProvider>
-            <select name='categories' onChange={updateSelectedCategory}>
-                        {categories ? categories.map(el => {
-                            return makeItem(el.name, el.id)
-                        }) : null}
-                    </select>
+                />
+                <textarea
+                    type='text'
+                    value={description}
+                    onChange={updateDescription}
+                    rows={5}
+                    placeholder="Describe your event in detail. It's best to include specifics, such as edge cases, sources, and timezones. The more the better!"
+                />
+                <div>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <Grid container justify="space-around">
+                        <KeyboardDateTimePicker
+                            disableToolbar
+                            variant="inline"
+                            format="MM/dd/yyyy"
+                            margin="normal"
+                            id="date-picker-inline"
+                            label="Event Ends"
+                            disablePast={true}
+                            maxDate={returnTomorrowDate}
+                            value={expires}
+                            onChange={updateExpires}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                        }}
+                        />
+                    </Grid>
+                </MuiPickersUtilsProvider>
+                </div>
+                <select name='categories' onChange={updateSelectedCategory}>
+                            {categories ? categories.map(el => {
+                                return makeItem(el.name, el.id)
+                            }) : null}
+                </select>
 
+                <button onClick={submitEvent}>Submit</button>
             </form>
-            <button onClick={submitEvent}>Submit</button>
         </div>
     )
     

@@ -11,3 +11,13 @@
     border-radius: 20px;
 
 }
+
+.createEvent__form {
+    display: flex;
+    flex-direction: column;
+    margin-right: 25%;
+    margin-left: 25%;
+    
+}
+
+

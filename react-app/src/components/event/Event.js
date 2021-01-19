@@ -193,6 +193,10 @@ const Event = () => {
     }
 
     const scorePredictionsYes = async() => {
+        
+        if (!eventInfo.resolved) {
+            dispatch(currentEventActions.resolveAndUpdateEvent([eventInfo.id]))
+        }
         const response = await fetch(`/api/events/${eventInfo.id}/score/1`, {
             method: 'PUT',
             headers: {'Content-Type':'application/json'},
@@ -207,6 +211,11 @@ const Event = () => {
     }
 
     const scorePredictionsNo = async() => {
+        
+        if (!eventInfo.resolved) {
+            dispatch(currentEventActions.resolveAndUpdateEvent([eventInfo.id]))
+        }
+
         const response = await fetch(`/api/events/${eventInfo.id}/score/2`, {
             method: 'PUT',
             headers: {'Content-Type':'application/json'},
@@ -221,6 +230,8 @@ const Event = () => {
     }
 
     const resolvedStatus = () => {
+
+        
 
         if (eventInfo.outcome == null) {
             return <span className='Event__resolved_pending'>Resolved: Pending Admin Action</span>
