@@ -69,7 +69,8 @@ const Event = () => {
             setPointsYes(calcScore(probabilityYes, yesList[yesList.length-1]))
             setPointsNo(calcScore(probabilityNo, noList[noList.length-1]))
         }
-    })
+        console.log('hit use effect')
+    }, [probabilityNo, probabilityYes])
 
     const checkTimes = () => {
         console.log('hit checkTimes')

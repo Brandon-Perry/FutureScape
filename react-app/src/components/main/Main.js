@@ -70,8 +70,11 @@ const Main = () => {
         })()
     }, [])
 
+    
+
     useEffect(() => {
         displayFilter()
+        console.log(sortBy)
     }, [events, filterCategory, searchTerm, sortBy, showOnlyUnresolved])
 
 
@@ -97,7 +100,7 @@ const Main = () => {
             })
         }
 
-        if (sortBy === 'recent') {
+        else if (sortBy === 'recent') {
 
             sortedEvents = events.sort((a,b) => {
                 const created_atA = new Date(a['created_at'])
@@ -110,7 +113,7 @@ const Main = () => {
             })
         }
 
-        if (sortBy === 'oldest') {
+        else if (sortBy === 'oldest') {
 
             sortedEvents = events.sort((a,b) => {
                 const created_atA = new Date(a['created_at'])

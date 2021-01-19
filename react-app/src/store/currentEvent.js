@@ -79,7 +79,8 @@ export const resolveAndUpdateEvent = (event_ids) => async(dispatch) => {
 
     const resJson = await response.json()
 
-    dispatch(setCurrentEvent(event_ids[0]))
+
+    dispatch(getCurrentEvent(event_ids[0]))
 }
 
 // const initialState = {event: null}
