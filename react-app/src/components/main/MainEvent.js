@@ -7,8 +7,21 @@ const MainEvent = ({event}) => {
 
     const linkToEvent = `/event/${event.id}`
 
-    const lastYes = event.predictions[event.predictions.length-2].probability
-    const lastNo = event.predictions[event.predictions.length-1].probability
+    let lastYes = null
+    let lastNo = null
+
+    if (!event.predictions[event.predictions.length-2]) {
+        lastYes = 50
+    } else {
+        lastYes = event.predictions[event.predictions.length-2].probability
+    }
+
+    if (!event.predictions[event.predictions.length-1]) {
+        lastNo = 50
+    } else {
+        lastNo = event.predictions[event.predictions.length-1].probability
+    }
+
     
     return (
         <div className='Main__event' id={event.id}>

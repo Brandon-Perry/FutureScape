@@ -35,3 +35,7 @@
     height:100%;
     width: auto;
 }
+
+.NavBar__container button:hover {
+    border: 1px solid black
+}
