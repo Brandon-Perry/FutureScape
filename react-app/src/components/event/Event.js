@@ -192,8 +192,22 @@ const Event = () => {
         }
     }
 
-    const scorePredictions = async() => {
+    const scorePredictionsYes = async() => {
         const response = await fetch(`/api/events/${eventInfo.id}/score/1`, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'nothing needed':null
+            })
+        })
+
+        const resJson = await response.json()
+        console.log(resJson)
+
+    }
+
+    const scorePredictionsNo = async() => {
+        const response = await fetch(`/api/events/${eventInfo.id}/score/2`, {
             method: 'PUT',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -264,18 +278,31 @@ const Event = () => {
 
                 </ThemeProvider>
             </div>
-            <div>
-                <button disabled={eventInfo.resolved} onClick={submitPrediction}>Submit</button>
+
+            <div className='Event__submit_button'>
+                <button disabled={eventInfo.resolved} onClick={submitPrediction}>Submit Prediction</button>
             </div>
 
-            <div><button onClick={scorePredictions}>Score Predictions</button></div>
+            {userInfo.admin ? 
+                <div className='Event__admin_actions'>
+                    <button onClick={scorePredictionsYes}>Score as Yes</button>
+                    <button onClick={scorePredictionsNo}>Score as No</button>
+                </div>
+            : null}
 
             <div className='Event__comments_container'>
                 {eventInfo.comments ? eventInfo.comments.map((comment) => {
                     return displayComment(comment)
                 }) : null}
-                <input type='text' onChange={updateCommentText} placeholder='type here' />
-                <button onClick={submitComment}>Post Comment</button>
+                <textarea
+                    onChange={updateCommentText} 
+                    placeholder='type here' 
+                    cols={80}
+                    rows={5}
+                />
+                <div>
+                    <button onClick={submitComment}>Post Comment</button>
+                </div>
             </div>
 
         </div>

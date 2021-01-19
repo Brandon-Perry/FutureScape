@@ -1,13 +1,14 @@
 .Event__container {
     margin-left: 0 auto;
     margin-right: 0 auto;
+    padding: 10px;
     position: fixed;
     top: 100px;
     bottom: 25px;
     left: 25%;
     right: 25%;
     width: 50%;
-    border: 2px solid blue;
+    border: 2px solid #007feb;
     border-radius: 20px;
 
 }
@@ -20,7 +21,7 @@
     display: flex;
     width: 100%;
     flex-direction: row;
-    height: 100px;
+    height: 150px;
 }
 
 .Event__description {
@@ -29,6 +30,7 @@
     border-right: 2px solid rgba(128, 128, 128, .5);
     border-bottom: 2px solid rgba(128, 128, 128, .5);
     margin-right: 5px;
+    overflow-y: scroll;
 }
 
 .Event__graph {
@@ -42,16 +44,52 @@
 .Event__comments_container {
     position: absolute;
     bottom: 0px;
+    max-height: 250px;
+    overflow-y: scroll;
+    width: 99%;
+    border-top: 1px solid blue;
+}
+
+.Event__comments_container input {
+    border-radius: 5px;
 }
 
 .Event__predictions_container {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 10px;
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+.Event__container button {
+    border-radius: 5px;
+    border: none;
+    background-color: rgba(0, 127, 235, .3)
+}
+
+.Event__container button:hover {
+    background-color: rgba(0, 127, 235, 1)
 }
 
 .Event__predictions_username_container, .Event__prediction_yes_container, .Event__prediction_no_container {
     display: flex;
     flex-direction: column;
+}
+
+/* .Event__prediction_username_container {
+
+} */
+
+.Event__prediction_yes_container {
+    color: green;
+}
+
+.Event__prediction_no_container {
+    color: red;
 }
 
 
@@ -67,4 +105,24 @@
 
 .Event__nopoints {
     color: red;
+}
+
+.Event__user_prediction_container {
+    margin-top: 20px;
+}
+
+
+
+.Event__comment {
+    border: 1px solid black;
+    margin-bottom: 5px;
+}
+
+.Event__comment_name {
+    background-color: rgba(0, 127, 235, .3);
+}
+
+.Event__submit_button {
+    display: flex;
+    justify-content: center;
 }
