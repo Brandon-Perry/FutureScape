@@ -55,13 +55,34 @@ const Event = () => {
         })
         setNoList(listOfNo.map(prediction => prediction.probability))
 
+        checkTimes()
+        setInterval(()=> checkTimes(), 60000)
+
     }, [eventInfo])
    
     useEffect(() => {
         if (!yesList || !noList) return
-        setPointsYes(calcScore(probabilityYes, yesList[yesList.length-1]))
-        setPointsNo(calcScore(probabilityNo, noList[noList.length-1]))
+        if (eventInfo.predictions.length === 0) {
+            setPointsYes(calcScore(probabilityYes, 50))
+            setPointsNo(calcScore(probabilityNo, 50))
+        } else {
+            setPointsYes(calcScore(probabilityYes, yesList[yesList.length-1]))
+            setPointsNo(calcScore(probabilityNo, noList[noList.length-1]))
+        }
     })
+
+    const checkTimes = () => {
+        console.log('hit checkTimes')
+
+        const is_expired = eventInfo.resolved
+        if (is_expired) return
+        
+        const now = new Date()
+        if (now.getTime() >= new Date(eventInfo.expires).getTime()) {
+            dispatch(currentEventActions.resolveAndUpdateEvent([eventInfo.id]))
+        } 
+
+    }
 
     const muiTheme = createMuiTheme({
         overrides: {
@@ -170,12 +191,66 @@ const Event = () => {
             return
         }
     }
+
+    const scorePredictionsYes = async() => {
+        
+        if (!eventInfo.resolved) {
+            dispatch(currentEventActions.resolveAndUpdateEvent([eventInfo.id]))
+        }
+        const response = await fetch(`/api/events/${eventInfo.id}/score/1`, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'nothing needed':null
+            })
+        })
+
+        const resJson = await response.json()
+        console.log(resJson)
+
+    }
+
+    const scorePredictionsNo = async() => {
+        
+        if (!eventInfo.resolved) {
+            dispatch(currentEventActions.resolveAndUpdateEvent([eventInfo.id]))
+        }
+
+        const response = await fetch(`/api/events/${eventInfo.id}/score/2`, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'nothing needed':null
+            })
+        })
+
+        const resJson = await response.json()
+        console.log(resJson)
+
+    }
+
+    const resolvedStatus = () => {
+
+        
+
+        if (eventInfo.outcome == null) {
+            return <span className='Event__resolved_pending'>Resolved: Pending Admin Action</span>
+        } else if (eventInfo.outcome == 'Yes') {
+            return <span className='Event__resolved_yes'>Resolved: Yes</span>
+        } else if (eventInfo.outcome =='No') {
+            return <span className='Event__resolved_no'>Resolved: No</span>
+        }
+
+    }
     
     return (
         <div className='Event__container'>
             
             <div className='Event__title'>
-                <h2>{eventInfo.title}</h2>
+                <h2>
+                    {eventInfo.title} {eventInfo.resolved ? resolvedStatus() : null}
+                </h2>
+                
             </div>
 
             <div className='Event__description_graph_container'>
@@ -189,21 +264,31 @@ const Event = () => {
 
             <div className='Event__predictions_container'>
                 <div className='Event__prediction_username_container'>
+                    <div className='Event__prediction_username'>
+                        <p>HOUSE</p>
+                    </div>
                     {userList ? displayUsernamePredictions() : null}
                 </div>
                 <div className='Event__prediction_yes_container'>
+                    <div className='Event__prediction_yes'>
+                        <p>50</p>
+                    </div>
                     {yesList ? displayYesPredictions() : null}
                 </div>
                 <div className='Event__prediction_no_container'>
+                    <div className='Event__prediction_yes'>
+                        <p>50</p>
+                    </div>
                     {noList ? displayNoPredictions() : null}
                 </div>
             </div>
 
             <div className='Event__user_prediction_container'>
-                {/* {probabilityYes}
-                {probabilityNo} */}
-                {pointsYes}
-                {pointsNo}
+                <div className='Event__yes_no_points'>
+                    <div><p>{pointsYes} points if event resolves <span className='Event__yespoints'>Yes</span></p></div>
+                    <div><p>{pointsNo} points if event resolves <span className='Event__nopoints'>No</span></p></div>
+
+                </div>
 
                 <ThemeProvider theme={muiTheme}>
                     <Slider 
@@ -214,20 +299,36 @@ const Event = () => {
                         valueLabelDisplay='on'
                         defaultValue={50}
                         onChange={changeProbabilityYes}
+                        disabled={eventInfo.resolved}
                         marks />
 
                 </ThemeProvider>
             </div>
-            <div>
-                <button onClick={submitPrediction}>Submit</button>
+
+            <div className='Event__submit_button'>
+                <button disabled={eventInfo.resolved} onClick={submitPrediction}>Submit Prediction</button>
             </div>
+
+            {userInfo.admin ? 
+                <div className='Event__admin_actions'>
+                    <button onClick={scorePredictionsYes}>Score as Yes</button>
+                    <button onClick={scorePredictionsNo}>Score as No</button>
+                </div>
+            : null}
 
             <div className='Event__comments_container'>
                 {eventInfo.comments ? eventInfo.comments.map((comment) => {
                     return displayComment(comment)
                 }) : null}
-                <input type='text' onChange={updateCommentText} placeholder='type here' />
-                <button onClick={submitComment}>Post Comment</button>
+                <textarea
+                    onChange={updateCommentText} 
+                    placeholder='type here' 
+                    cols={80}
+                    rows={5}
+                />
+                <div>
+                    <button onClick={submitComment}>Post Comment</button>
+                </div>
             </div>
 
         </div>

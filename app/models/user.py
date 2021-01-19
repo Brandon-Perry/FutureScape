@@ -14,7 +14,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     admin = db.Column(db.Boolean(), default=False)
-    points = db.Column(db.Integer())
+    points = db.Column(db.Integer(), default=0)
 
     events = db.relationship('Prediction', back_populates='users')
     comments = db.relationship('Comment', back_populates='user')

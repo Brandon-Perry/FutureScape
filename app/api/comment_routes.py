@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request 
 
 from ..models import db, Prediction, Event, User, Choice, Comment
-from .helperFunctions import unpack_users_from_predictions, unpack_choice_from_predictions
+from .helperFunctions import unpack_users_from_comments
 
 comment_routes = Blueprint('comments', __name__)
 
@@ -26,9 +26,10 @@ def create_comment():
     data = updated_event.to_dict_full()
     updated_comments = data['comments']
     updated_comments = [comment.to_dict_event() for comment in updated_comments]
-    print('----------')
-    print(data)
-    print(updated_comments)
-    print('----------')
+    updated_comments = unpack_users_from_comments(updated_comments)
+    # print('----------')
+    # print(data)
+    # print(updated_comments)
+    # print('----------')
     
-    return updated_comments
+    return {'comments':updated_comments}

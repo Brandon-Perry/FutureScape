@@ -1,5 +1,5 @@
 .NavBar__container {
-    background-color: blue;
+    background-color: #007feb;
     position: absolute;
     top: 0px;
     height: 75px;
@@ -8,11 +8,19 @@
     justify-content: space-between;
 }
 
+.NavBar__container button {
+    border-radius: 5px;
+    border: none;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
 .NavBar__user_logout_container {
     margin-right: 30px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    /* position: absolute; */
+    flex-direction: row;
+    align-items: flex-end;
 }
 
 .NavBar__user {
@@ -22,6 +30,8 @@
     justify-content: center;
 }
 
-/* .NavBar__user:hover {
-
-} */
+.NavBar__logo {
+    display:flex;
+    height:100%;
+    width: auto;
+}

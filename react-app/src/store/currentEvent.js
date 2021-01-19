@@ -61,7 +61,25 @@ export const addAndUpdateComments = (user_id, event_id, comment) => async(dispat
             'comment': comment
         })
     })
-    const resJSon = response.json()
+    const resJson = await response.json()
+    const latestComments = resJson['comments']
+
+    dispatch(addComment(latestComments))
+}
+
+export const resolveAndUpdateEvent = (event_ids) => async(dispatch) => {
+    const response = await fetch('/api/events/resolve', {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+            'event_ids':event_ids,
+            'return_all_events': false
+        })
+    })
+
+    const resJson = await response.json()
+
+    dispatch(setCurrentEvent(event_ids[0]))
 }
 
 // const initialState = {event: null}
@@ -78,6 +96,11 @@ const currentEventReducer = (state = {}, action) => {
         case ADD_PREDICTIONS:
             new_state = Object.assign({}, state)
             new_state.predictions = action.payload
+            return new_state
+
+        case ADD_COMMENT:
+            new_state = Object.assign({}, state)
+            new_state.comments = action.payload
             return new_state
 
         default:

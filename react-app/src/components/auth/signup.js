@@ -75,6 +75,7 @@ const SignUpForm = () => {
                 <input 
                     onChange={updatePassword} 
                     value={password} 
+                    type='password'
                     placeholder='Password'
                 />
                 <input 

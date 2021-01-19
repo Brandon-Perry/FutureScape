@@ -20,26 +20,35 @@ const SplashPage = () => {
         <div>
             <div className='splash-container'>
                 <div className='splash-login__buton'>
-                    <button onClick={changeLoginState}>Login</button>
+                    
                 </div>
                 <div className='splash-main'>
-                    <h1 className='splash-title'>FutureScape</h1>
-                    <p className='splash-subtitle'>Know Your Future</p>
+                    <div className='splash-title'>
+                        <img src={require('../../assets/logo_splash.png')} />
+                    </div>
+
                     <div className='splash-text'>
                         <p classname='about'>
-                            FutureScape is an open source prediction market that uses crowd-sourced
+                            FutureScape is an reputation based prediction market that uses crowd-sourced
                             predictions to create estimates about what will happen in the world. 
                             From global affairs to production numbers, find out what will happen now
                             by signing up today!
                         </p>
                     </div>
-                    {loginState ? <LoginForm /> : <SignUpForm />}
-                    <div>
-                        <p>Or, take a peek</p>
+
+                    <div className='splash-form'>
+                        {loginState ? <LoginForm /> : <SignUpForm />}
                     </div>
-                    <div>
-                        <button>Demo Sign-In</button>
+                    <div className='splash-buttons'>
+                        <div>
+                            <button onClick={changeLoginState}>{!loginState ? 'Have an Account Already?' : 'Create an Account'}</button>
+                        </div>
+                        <div>
+                            <button>Demo Sign-In</button>
+                        </div>
                     </div>
+
+                   
                 </div>
             </div>
             <SplashFooter />
