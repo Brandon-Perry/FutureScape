@@ -219,12 +219,27 @@ const Event = () => {
         console.log(resJson)
 
     }
+
+    const resolvedStatus = () => {
+
+        if (eventInfo.outcome == null) {
+            return <span className='Event__resolved_pending'>Resolved: Pending Admin Action</span>
+        } else if (eventInfo.outcome == 'Yes') {
+            return <span className='Event__resolved_yes'>Resolved: Yes</span>
+        } else if (eventInfo.outcome =='No') {
+            return <span className='Event__resolved_no'>Resolved: No</span>
+        }
+
+    }
     
     return (
         <div className='Event__container'>
             
             <div className='Event__title'>
-                <h2>{eventInfo.title}</h2>
+                <h2>
+                    {eventInfo.title} {eventInfo.resolved ? resolvedStatus() : null}
+                </h2>
+                
             </div>
 
             <div className='Event__description_graph_container'>

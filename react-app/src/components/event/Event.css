@@ -126,3 +126,15 @@
     display: flex;
     justify-content: center;
 }
+
+.Event__resolved_pending {
+    background-color: grey;
+}
+
+.Event__resolved_yes {
+    background-color: green;
+}
+
+.Event__resolved_no {
+    background-color: red;
+}

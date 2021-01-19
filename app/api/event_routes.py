@@ -104,6 +104,13 @@ def handle_scores(event_id, choice_id):
     # print('--------')
 
     event = Event.query.get(event_id)
+    if int(choice_id) == 1:
+        event.outcome = 'Yes'
+        db.session.commit()
+    if int(choice_id) == 2:
+        event.outcome = 'No'
+        db.session.commit()
+    
     # print('--------')
     # print('event', event.predictions)
     # print('--------')
