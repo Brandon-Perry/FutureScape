@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -47,6 +47,14 @@ db.init_app(app)
 Migrate(app, db)
 
 CORS(app)
+
+@app.before_request
+def https_redirect():
+    if os.environ.get('FLASK_ENV') == 'production':
+        if request.headers.get('X-Forwarded-Proto') == 'http':
+            url = request.url.replace('http://', 'https://', 1)
+            code = 301
+            return redirect(url, code=code) 
 
 @app.after_request
 def inject_csrf_token(response):
