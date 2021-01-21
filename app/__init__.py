@@ -1,10 +1,11 @@
 import os
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_cors import CORS
+import os
 
 
 from .config import Config
@@ -71,7 +72,15 @@ def inject_csrf_token(response):
 
 
 
-@app.route('/hello')
-def hello():
-    return 'Hello, world!'
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    print(f'caught_path: {path}')
+    path_dir = os.path.abspath("./react-app/build")  # path react build
+    if path and (os.path.exists(f'./react-app/build/static/{path}') or
+                 os.path.exists(f'./react-app/build/{path}')):
+        return send_from_directory(os.path.join(path_dir), path)
+    else:
+        return send_from_directory(os.path.join(path_dir), 'index.html')
 
