@@ -18,6 +18,7 @@ flask-cors = "3.0.10"
 pyjwt = "2.0.0"
 pylint = "2.6.0"
 faker = "5.6.1"
+gunicorn = "*"
 
 [dev-packages]
 psycopg2-binary = "2.8.6"
