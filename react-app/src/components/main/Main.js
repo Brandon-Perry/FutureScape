@@ -100,7 +100,7 @@ const Main = () => {
             })
         }
 
-        else if (sortBy === 'recent') {
+        if (sortBy === 'recent') {
 
             sortedEvents = events.sort((a,b) => {
                 const created_atA = new Date(a['created_at'])
@@ -113,7 +113,7 @@ const Main = () => {
             })
         }
 
-        else if (sortBy === 'oldest') {
+        if (sortBy === 'oldest') {
 
             sortedEvents = events.sort((a,b) => {
                 const created_atA = new Date(a['created_at'])

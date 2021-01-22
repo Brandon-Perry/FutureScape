@@ -73,14 +73,21 @@ def inject_csrf_token(response):
 
 
 
+# @app.route('/', defaults={'path': ''})
+# @app.route('/<path:path>')
+# def catch_all(path):
+#     print(f'caught_path: {path}')
+#     path_dir = os.path.abspath("./react-app/build")  # path react build
+#     if path and (os.path.exists(f'./react-app/build/static/{path}') or
+#                  os.path.exists(f'./react-app/build/{path}')):
+#         return send_from_directory(os.path.join(path_dir), path)
+#     else:
+#         return send_from_directory(os.path.join(path_dir), 'index.html')
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
-def catch_all(path):
-    print(f'caught_path: {path}')
-    path_dir = os.path.abspath("./react-app/build")  # path react build
-    if path and (os.path.exists(f'./react-app/build/static/{path}') or
-                 os.path.exists(f'./react-app/build/{path}')):
-        return send_from_directory(os.path.join(path_dir), path)
-    else:
-        return send_from_directory(os.path.join(path_dir), 'index.html')
-
+def react_root(path):
+    print("path", path)
+    if path == 'favicon.ico':
+        return app.send_static_file('favicon.ico')
+    return app.send_static_file('index.html')
