@@ -9,6 +9,8 @@ import './Event.css'
 
 import * as currentEventActions from '../../store/currentEvent'
 
+
+
 const Event = () => {
     let {eventId} = useParams();
     const dispatch = useDispatch()
@@ -29,6 +31,15 @@ const Event = () => {
 
         
     }, [dispatch])
+
+    // useEffect(() => {
+    //     console.log('hit use effect')
+    //     let commentScroll = document.getElementsByClassName('Event__comments_container')
+    //     commentScroll[0].scrollTop -= commentScroll.scrollHeight;
+    //     console.log(commentScroll[0])
+    //     console.log(commentScroll[0].scrollTop)
+    // }, [])
+
     
     
     useEffect(()=> {
@@ -58,6 +69,10 @@ const Event = () => {
         checkTimes()
         setInterval(()=> checkTimes(), 60000)
 
+        let scroller = document.getElementsByClassName('Event__comments_container')
+        scroller[0].scrollTop = scroller[0].scrollHeight
+        console.log(scroller)
+
     }, [eventInfo])
    
     useEffect(() => {
@@ -84,6 +99,7 @@ const Event = () => {
         } 
 
     }
+
 
     const muiTheme = createMuiTheme({
         overrides: {
@@ -134,6 +150,7 @@ const Event = () => {
 
 
     const displayComment = (comment) => {
+        
         return (
             <div className='Event__comment' id={comment.id}>
                 <div className='Event__comment_name'>
@@ -330,6 +347,7 @@ const Event = () => {
                 <div>
                     <button onClick={submitComment}>Post Comment</button>
                 </div>
+            
             </div>
 
         </div>
