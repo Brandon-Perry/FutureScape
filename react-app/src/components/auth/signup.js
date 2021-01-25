@@ -81,6 +81,7 @@ const SignUpForm = () => {
                 <input 
                     onChange={updateRepeatPassword} 
                     value={repeatPassword} 
+                    type='password'
                     placeholder='Repeat Password'
                 />
                 <button type='submit'>Sign Up</button>
