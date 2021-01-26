@@ -1,18 +1,32 @@
 import React, {useState} from 'react'
+import { useDispatch } from 'react-redux'
 
 import './splashpagestyle.css'
 
 import SplashFooter from './splashfooter'
 import SignUpForm from '../auth/signup'
 import LoginForm from '../auth/login'
+import * as sessionActions from '../../store/session'
 
 const SplashPage = () => {
     const [loginState, setLoginState] = useState(false)
+
+    const dispatch = useDispatch()
 
 
     const changeLoginState = (e) => {
         e.preventDefault()
         setLoginState(!loginState)
+    }
+
+    const demoLogin = (e) => {
+        e.preventDefault()
+
+        console.log('hit demo login')
+
+        setLoginState(true)
+
+        return dispatch(sessionActions.login({'email': 'demo@demo.com', 'password':'password'}))
     }
 
 
@@ -44,7 +58,7 @@ const SplashPage = () => {
                             <button onClick={changeLoginState}>{!loginState ? 'Have an Account Already?' : 'Create an Account'}</button>
                         </div>
                         <div>
-                            <button>Demo Sign-In</button>
+                            <button onClick={demoLogin}>Demo Sign-In</button>
                         </div>
                     </div>
 

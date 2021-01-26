@@ -48,11 +48,13 @@ const LoginForm = () => {
                 </div>
                 
                 <input 
+                    className='signup__email'
                     value={email} 
                     onChange={updateEmail} 
                     placeholder='Email'
                 />
                 <input 
+                    className='signup__password'
                     value={password} 
                     onChange={updatePassword} 
                     type='password'
