@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
 import {Redirect} from 'react-router-dom'
+
+import * as sessionActions from '../../store/session'
 
 const SignUpForm = () => {
     const [username, setUsername] = useState('')
@@ -7,6 +10,8 @@ const SignUpForm = () => {
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
     const [authenticated, setAuthenticated] = useState(false)
+
+    const dispatch = useDispatch()
 
     if (authenticated) {
         return <Redirect to='/app' />
@@ -37,6 +42,7 @@ const SignUpForm = () => {
         
         let resJson = await response.json()
         if (response.ok) {
+            await dispatch(sessionActions.authenticate())
             setAuthenticated(true)
         } 
         return resJson
