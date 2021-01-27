@@ -32,7 +32,7 @@ const Chart = ({predictions}) => {
         labels: yes_labels,
         datasets: [{
             data: yes_values,
-            label: 'Probability Yes',
+            pointRadius: 0,
             borderColor: 'rgba(0,128,0,.5)',
             backgroundColor:'rgba(0,128,0,.2)',
         }]
@@ -41,12 +41,22 @@ const Chart = ({predictions}) => {
     const options = {
                 scales: {
                     xAxes: [{
-                        type: 'time'
+                        type: 'time',
+                        ticks: {
+                            display: false
+                        },
+                        gridLines: {
+                            display: false
+                        }
                     }],
                     yAxes: [{
                         ticks: {
                             min: 1,
-                            max: 99
+                            max: 99,
+                            display: false
+                        },
+                        gridLines: {
+                            display: false
                         }
                     }]
                 },
@@ -54,6 +64,7 @@ const Chart = ({predictions}) => {
                 legend: {
                     display: false,
                 },
+                responsive: false,
             }
 
     return (
@@ -66,8 +77,4 @@ const Chart = ({predictions}) => {
 
 }
 
-
-
-
 export default Chart
-

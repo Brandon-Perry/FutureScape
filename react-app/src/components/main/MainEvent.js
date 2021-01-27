@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 
+import Chart from './Chart'
 
 
 const MainEvent = ({event}) => {
@@ -30,7 +31,7 @@ const MainEvent = ({event}) => {
                 <Link to={linkToEvent}><h3>{event.title}</h3></Link> 
             </div>
             <div className='Main__event_graph'>
-                <p>Graph</p>
+                <Chart predictions={event.predictions} />
             </div>
             <div className='Main__event_current_predictions'>
                 <p><span className='Main__event_yes'>{lastYes}</span> <span className='Main__event_no'>{lastNo}</span></p>
