@@ -8,6 +8,7 @@ import {ThemeProvider} from '@material-ui/styles'
 import './Event.css'
 
 import * as currentEventActions from '../../store/currentEvent'
+import Chart from './Chart'
 
 
 
@@ -276,7 +277,7 @@ const Event = () => {
                     <p>{eventInfo.description}</p>
                 </div>
                 <div className='Event__graph'>
-                    <p>Graph</p>
+                    {yesList && noList ? <Chart predictions={eventInfo.predictions} /> : null}
                 </div>
             </div>
 
