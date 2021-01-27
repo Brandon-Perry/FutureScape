@@ -1,5 +1,6 @@
 from app.models import db, Event, User, Comment, Prediction, Category, Choice
 import datetime
+from datetime import timedelta
 import random
 from faker import Faker
 
@@ -69,7 +70,7 @@ def seed_all():
                 expires=datetime.datetime(2021, 2, 18, 0, 0, 0), category_id=5, created_at=datetime.datetime(2021, 1, 17, 0, 0, 0))
         event5 = Event(title='Will There Be a Conflict Between the United States and China in the South China Sea That Results in At Least One Death by End of Year?', description='The South China Sea is a contested space between the United States and China, with China claiming it as its own territory, and the United States engaging in freedom of navigation excersizes. Conflict is defined either as in fighting or some form of violence. This event ends either when one death has occured because of conflict between the two nations, or on January 1st, 2022 UTC',
                 expires=datetime.datetime(2022, 1, 1, 0, 0, 0), category_id=4, created_at=datetime.datetime(2021, 1, 18, 0, 0, 0))
-        event6 = Event(title='Will This Event Resolve as True?', description='This is a demo event', expires=datetime.datetime(2021, 1, 15, 15, 0, 0), category_id=8, demo_event=True)
+        event6 = Event(title='Will This Event Resolve as True?', description='This is a demo event', expires=datetime.datetime(2021, 1, 15, 15, 0, 0), category_id=8, demo_event=True, created_at=datetime.datetime(2021, 1, 25, 0, 0, 0))
         event7 = Event(title="Will Deepmind's AlphaFold achieve at least a 90 GDT on the 14th CASP Assessment?", description="Casp is an organization that's dedicated to tracking improvements on the protein folding grand challenge. During its upcoming 14th assessment, will DeepMind's AlphaFold achieve at least a 90 on its median GDT score?",
                 expires=datetime.datetime(2020,11,30,0,0,0), category_id=2, created_at=datetime.datetime(2020, 1, 1, 0, 0, 0))
 
@@ -88,7 +89,14 @@ def seed_all():
 
     ####GENERATE PREDICTIONS AND COMMENTS
 
+
         predictions_list = []
+
+        def generate_prediction_time(event_start_time, end_time=datetime.datetime.utcnow()):
+                delta = end_time - event_start_time
+                int_delta = (delta.days * 24 * 60) + delta.seconds
+                random_second = random.randrange(int_delta)
+                return event_start_time + timedelta(seconds=random_second)
         
 
         for _i in list(range(0,30)):
@@ -96,23 +104,48 @@ def seed_all():
                 random_event = random.choice(event_list)
                 probYes = random.randint(1,99)
                 probNo = 100 - probYes
-                yesPrediction = Prediction(user_id=random_user.id, event_id=random_event.id, choice_id=1, probability=probYes)
-                noPrediction = Prediction(user_id=random_user.id, event_id=random_event.id, choice_id=2, probability=probNo)
+                prediction_created_at = fake.date_time_between(start_date=random_event.created_at, end_date='now')
+
+                yesPrediction = Prediction(user_id=random_user.id, event_id=random_event.id, choice_id=1, probability=probYes, created_at=prediction_created_at)
+                noPrediction = Prediction(user_id=random_user.id, event_id=random_event.id, choice_id=2, probability=probNo, created_at=prediction_created_at)
                 comment = Comment(user_id=random_user.id, event_id=random_event.id, comment=fake.paragraph(nb_sentences=2))
-                
-                db.session.add(yesPrediction)
-                db.session.add(noPrediction)
+
                 db.session.add(comment)
                 db.session.commit()
-
-                random_user.events.append(yesPrediction)
-                random_user.events.append(noPrediction)
                 random_user.comments.append(comment)
-                random_event.predictions.append(yesPrediction)
-                random_event.predictions.append(noPrediction)
 
-                predictions_list.append(yesPrediction)
-                predictions_list.append(noPrediction)
+                predictions_list.append((yesPrediction, noPrediction))
+
+
+        def sorter_helper_func(el):
+                return el[0].created_at
+
+        predictions_list.sort(key=sorter_helper_func) 
+
+        for prediction_tuple in predictions_list:
+                db.session.add(prediction_tuple[0])
+                db.session.add(prediction_tuple[1])
+                db.session.commit()
+
+                event = Event.query.get(prediction_tuple[0].event_id)
+                user = User.query.get(prediction_tuple[0].user_id)
+
+                user.events.append(prediction_tuple[0])  
+                user.events.append(prediction_tuple[1])    
+                event.predictions.append(prediction_tuple[0])
+                event.predictions.append(prediction_tuple[1])   
+                
+        # db.session.add(yesPrediction)
+        # db.session.add(noPrediction)
+        # db.session.add(comment)
+        # db.session.commit()
+
+        # random_user.events.append(yesPrediction)
+        # random_user.events.append(noPrediction)
+        # random_user.comments.append(comment)
+        # random_event.predictions.append(yesPrediction)
+        # random_event.predictions.append(noPrediction)
+
 
 
         

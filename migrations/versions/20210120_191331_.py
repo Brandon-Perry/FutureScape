@@ -67,6 +67,7 @@ def upgrade():
     sa.Column('event_id', sa.Integer(), nullable=False),
     sa.Column('choice_id', sa.Integer(), nullable=False),
     sa.Column('probability', sa.Integer(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.CheckConstraint('probability <= 100'),
     sa.CheckConstraint('probability >= 0'),
     sa.ForeignKeyConstraint(['choice_id'], ['choices.id'], ),

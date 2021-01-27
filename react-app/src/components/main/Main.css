@@ -84,6 +84,13 @@
     /* background-color: blue */
 }
 
+.Main__event_graph canvas {
+    max-width: 150px;
+    max-height: 100px;
+    margin: 5px;
+    border: 1px solid rgba(0, 0, 0, .3);
+}
+
 .Main__event_current_predictions {
     display: flex;
     grid-column-start: 3;

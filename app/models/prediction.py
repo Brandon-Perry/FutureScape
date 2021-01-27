@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import CheckConstraint
 from .user import User
 from .event import Event
+import datetime
 # from sqlalchemy.schema import Table
 
 
@@ -23,6 +24,7 @@ class Prediction(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
     choice_id = db.Column(db.Integer, db.ForeignKey('choices.id'), nullable=False)
     probability = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
 
     __table_args__ = (
         CheckConstraint('probability >= 0'),
@@ -41,7 +43,8 @@ class Prediction(db.Model):
             'probability':self.probability,
             'users':self.users,
             'events':self.events,
-            'choices':self.choices
+            'choices':self.choices,
+            'created_at':self.created_at,
         }
 
     def to_dict_min(self):
@@ -50,6 +53,7 @@ class Prediction(db.Model):
             'event_id':self.event_id,
             'choice_id':self.choice_id,
             'probability':self.probability,
+            'created_at':self.created_at,
         }
 
     def to_dict_event(self):
@@ -59,5 +63,6 @@ class Prediction(db.Model):
             'choice_id':self.choice_id,
             'probability':self.probability,
             'users':self.users,
-            'choices':self.choices
+            'choices':self.choices,
+            'created_at':self.created_at,
         }
