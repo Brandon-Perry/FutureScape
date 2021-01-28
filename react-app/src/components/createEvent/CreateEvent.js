@@ -120,12 +120,12 @@ const CreateEvent = () => {
                             <KeyboardDateTimePicker
                                 disableToolbar
                                 variant="inline"
-                                format="MM/dd/yyyy"
+                                ampm={false}
+                                format="MM/dd/yyyy HH:mm UTC"
                                 margin="normal"
                                 id="date-picker-inline"
                                 label="Event Ends"
                                 disablePast={true}
-                                maxDate={returnTomorrowDate}
                                 value={expires}
                                 onChange={updateExpires}
                                 KeyboardButtonProps={{
