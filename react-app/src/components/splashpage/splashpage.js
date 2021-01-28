@@ -40,7 +40,7 @@ const SplashPage = () => {
                     </div>
 
                     <div className='splash-text'>
-                        <p classname='about'>
+                        <p className='about'>
                             FutureScape is an reputation based prediction market that uses crowd-sourced
                             predictions to create estimates about what will happen in the world. 
                             From global affairs to production numbers, find out what will happen now
