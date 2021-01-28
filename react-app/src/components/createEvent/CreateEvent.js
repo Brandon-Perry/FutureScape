@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
 
-import TextField from '@material-ui/core/TextField'
 import MomentUtils from '@date-io/moment';
-import Moment from 'moment'
 import {KeyboardDateTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers'
 import Grid from '@material-ui/core/Grid'
 
@@ -25,14 +22,12 @@ const CreateEvent = () => {
         (async() => {
             const response = await fetch('/api/categories/')
             const resJson = await response.json()
-            // console.log(resJson)
             let categoryObjs = resJson.categories.filter(category => {
                 if (category.name !== 'All') {
                     return category
                 }
             })
             setCategories(categoryObjs)
-            // console.log(categories)
             setSelectedCategory(categoryObjs[0].id)
 
             
@@ -60,10 +55,7 @@ const CreateEvent = () => {
     }
 
     const updateExpires = (date, value) => {
-        // console.log(date)
         setExpires(date.toISOString())
-        console.log(Date(date))
-        // console.log(new Date(expires))
     }
 
     const returnTomorrowDate = () => {
@@ -77,7 +69,6 @@ const CreateEvent = () => {
 
     const submitEvent = async (e) => {
         e.preventDefault()
-        console.log(expires)
 
         const response = await fetch('/api/events/', {
             method:'POST',
@@ -115,6 +106,7 @@ const CreateEvent = () => {
                     placeholder="Describe your event in detail. It's best to include specifics, such as edge cases, sources, and timezones. The more the better!"
                 />
                 <div>
+
                     <MuiPickersUtilsProvider utils={MomentUtils}>
                         <Grid container justify="space-around">
                             <KeyboardDateTimePicker
@@ -134,6 +126,7 @@ const CreateEvent = () => {
                             />
                         </Grid>
                     </MuiPickersUtilsProvider>
+
                 </div>
                 <select name='categories' onChange={updateSelectedCategory}>
                             {categories ? categories.map(el => {

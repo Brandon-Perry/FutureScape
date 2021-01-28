@@ -25,7 +25,7 @@ const MainEvent = ({event}) => {
 
     
     return (
-        <div className='Main__event' id={event.id}>
+        <div className='Main__event' id={event.id} key={event.id}>
 
             <div className='Main__event_title'>
                 <Link to={linkToEvent}><h3>{event.title}</h3></Link> 

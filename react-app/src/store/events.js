@@ -15,13 +15,11 @@ export const allEvents = () => async(dispatch) => {
     const response = await fetch('/api/events/')
 
     const resJson = await response.json()
-    // console.log(resJson)
     dispatch(setEvents(resJson))
     return response
 }
 
 export const resolveAndUpdateEvents = (event_ids) => async(dispatch) => {
-    // console.log('hit resolve and update events')
     const response = await fetch('/api/events/resolve', {
         method: 'PUT',
         headers: {'Content-Type':'application/json'},
@@ -30,10 +28,8 @@ export const resolveAndUpdateEvents = (event_ids) => async(dispatch) => {
             'return_all_events': true
         })
     })
-    // console.log(response)
 
     const resJson = await response.json()
-    // console.log(resJson)
 
     //Just going to use getEvents since this sends back the same information
     dispatch(setEvents(resJson))
