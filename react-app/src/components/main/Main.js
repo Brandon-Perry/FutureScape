@@ -13,7 +13,6 @@ const Main = () => {
     const [categories, setCategories] = useState('None')
     const [filterCategory, setFilterCategory] = useState('All')
     const [searchTerm, setSearchTerm] = useState(null)
-    const [loaded, setLoaded] = useState(false)
     const [eventsDisplay, setEventsDisplay] = useState(null)
     const events = useSelector((state) => state.events.events)
 
@@ -28,7 +27,6 @@ const Main = () => {
     }
 
     const checkTimes = () => {
-        console.log('hit checkTimes')
         if (!events) return
         const now = new Date()
 
@@ -44,7 +42,6 @@ const Main = () => {
             
             let event_ids = []
             toResolveEvents.forEach(event => event_ids.push(event.id))
-            console.log(event_ids)
     
             dispatch(eventActions.resolveAndUpdateEvents(event_ids))
         }
@@ -62,7 +59,6 @@ const Main = () => {
             })
             setCategories([...names])
 
-            setLoaded(true)
 
             setInterval(() => checkTimes(), 60000)
            
@@ -74,7 +70,6 @@ const Main = () => {
 
     useEffect(() => {
         displayFilter()
-        console.log(sortBy)
     }, [events, filterCategory, searchTerm, sortBy, showOnlyUnresolved])
 
 

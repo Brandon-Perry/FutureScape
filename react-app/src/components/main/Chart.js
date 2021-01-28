@@ -1,11 +1,9 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2'
 
-let ChartJS = require('chart.js')
 
 const Chart = ({predictions}) => {
 
-    console.log(predictions)
 
     let yesList = predictions.filter(el => {
         if (el.choice_id === 1) {
@@ -22,7 +20,6 @@ const Chart = ({predictions}) => {
     const yes_labels = yesList.map(el => {
         return el.created_at
     })
-    console.log(yes_labels)
 
     const yes_values = yesList.map(el => {
         return el.probability

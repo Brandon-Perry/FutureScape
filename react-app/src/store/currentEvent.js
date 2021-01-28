@@ -49,6 +49,8 @@ export const addAndUpdatePredictions = (user_id, event_id, probabilityYes, proba
     const latestPredictions = resPredictions['predictions']
 
     dispatch(addPredictions(latestPredictions))
+
+    return responseYes
 }
 
 export const addAndUpdateComments = (user_id, event_id, comment) => async(dispatch) => {
@@ -81,6 +83,8 @@ export const resolveAndUpdateEvent = (event_ids) => async(dispatch) => {
 
 
     dispatch(getCurrentEvent(event_ids[0]))
+
+    return resJson
 }
 
 // const initialState = {event: null}

@@ -24,6 +24,8 @@ const SignUpForm = () => {
             // if (!user.errors) {
             //     setAuthenticated(true)
             // }
+
+            return user
         }
     }
 
