@@ -115,25 +115,25 @@ const CreateEvent = () => {
                     placeholder="Describe your event in detail. It's best to include specifics, such as edge cases, sources, and timezones. The more the better!"
                 />
                 <div>
-                <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <Grid container justify="space-around">
-                        <KeyboardDateTimePicker
-                            disableToolbar
-                            variant="inline"
-                            format="MM/dd/yyyy"
-                            margin="normal"
-                            id="date-picker-inline"
-                            label="Event Ends"
-                            disablePast={true}
-                            maxDate={returnTomorrowDate}
-                            value={expires}
-                            onChange={updateExpires}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                        }}
-                        />
-                    </Grid>
-                </MuiPickersUtilsProvider>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <Grid container justify="space-around">
+                            <KeyboardDateTimePicker
+                                disableToolbar
+                                variant="inline"
+                                format="MM/dd/yyyy"
+                                margin="normal"
+                                id="date-picker-inline"
+                                label="Event Ends"
+                                disablePast={true}
+                                maxDate={returnTomorrowDate}
+                                value={expires}
+                                onChange={updateExpires}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                            }}
+                            />
+                        </Grid>
+                    </MuiPickersUtilsProvider>
                 </div>
                 <select name='categories' onChange={updateSelectedCategory}>
                             {categories ? categories.map(el => {
