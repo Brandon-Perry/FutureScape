@@ -113,7 +113,7 @@ const CreateEvent = () => {
                                 disableToolbar
                                 variant="inline"
                                 ampm={false}
-                                format="MM/dd/yyyy HH:mm UTC"
+                                format="MM/DD/yyyy HH:mm UTC"
                                 margin="normal"
                                 id="date-picker-inline"
                                 label="Event Ends"
