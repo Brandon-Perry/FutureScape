@@ -14,7 +14,7 @@ def seed_all():
         ####GENERATE USERS
 
         dev = User(username='Dev', email='dev@dev.com', password='password123456', admin=True)
-        demo_user = User(username='Demo', email='demo@demo.com', password='password')
+        demo_user = User(username='Demo', email='demo@demo.com', password='password', admin=True)
         seedy = User(username='Seedy McData', email='seedy@demo.com', password='password')
         db.session.add(dev)
         db.session.add(demo_user)
