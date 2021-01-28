@@ -22,8 +22,6 @@ const SplashPage = () => {
     const demoLogin = (e) => {
         e.preventDefault()
 
-        console.log('hit demo login')
-
         setLoginState(true)
 
         return dispatch(sessionActions.login({'email': 'demo@demo.com', 'password':'password'}))
@@ -38,7 +36,7 @@ const SplashPage = () => {
                 </div>
                 <div className='splash-main'>
                     <div className='splash-title'>
-                        <img src={require('../../assets/logo_splash.png')} />
+                        <img src={require('../../assets/logo_splash.png')} alt={'FutureScape Logo'} />
                     </div>
 
                     <div className='splash-text'>

@@ -33,20 +33,14 @@ const Event = () => {
         
     }, [dispatch])
 
-    // useEffect(() => {
-    //     console.log('hit use effect')
-    //     let commentScroll = document.getElementsByClassName('Event__comments_container')
-    //     commentScroll[0].scrollTop -= commentScroll.scrollHeight;
-    //     console.log(commentScroll[0])
-    //     console.log(commentScroll[0].scrollTop)
-    // }, [])
+  
 
     
     
     useEffect(()=> {
         if (!eventInfo.predictions) return
         const listOfUsers = eventInfo.predictions.filter(prediction => {
-            if (prediction.choice_id == 1) {
+            if (prediction.choice_id === 1) {
                 
                 return prediction
             }
@@ -54,14 +48,14 @@ const Event = () => {
         setUserList(listOfUsers.map(prediction => prediction.users.username))
     
         const listOfYes = eventInfo.predictions.filter(prediction => {
-            if (prediction.choice_id == 1) {
+            if (prediction.choice_id === 1) {
                 return prediction
             }
         })
         setYesList(listOfYes.map(prediction => prediction.probability))
     
         const listOfNo = eventInfo.predictions.filter(prediction => {
-            if (prediction.choice_id == 2) {
+            if (prediction.choice_id === 2) {
                 return prediction
             }
         })
@@ -72,7 +66,6 @@ const Event = () => {
 
         let scroller = document.getElementsByClassName('Event__comments_container')
         scroller[0].scrollTop = scroller[0].scrollHeight
-        console.log(scroller)
 
     }, [eventInfo])
    
@@ -85,11 +78,9 @@ const Event = () => {
             setPointsYes(calcScore(probabilityYes, yesList[yesList.length-1]))
             setPointsNo(calcScore(probabilityNo, noList[noList.length-1]))
         }
-        console.log('hit use effect')
     }, [probabilityNo, probabilityYes])
 
     const checkTimes = () => {
-        console.log('hit checkTimes')
 
         const is_expired = eventInfo.resolved
         if (is_expired) return
@@ -225,7 +216,8 @@ const Event = () => {
         })
 
         const resJson = await response.json()
-        console.log(resJson)
+
+        return resJson
 
     }
 
@@ -244,7 +236,8 @@ const Event = () => {
         })
 
         const resJson = await response.json()
-        console.log(resJson)
+
+        return resJson
 
     }
 
@@ -252,11 +245,11 @@ const Event = () => {
 
         
 
-        if (eventInfo.outcome == null) {
+        if (eventInfo.outcome === null) {
             return <span className='Event__resolved_pending'>Resolved: Pending Admin Action</span>
-        } else if (eventInfo.outcome == 'Yes') {
+        } else if (eventInfo.outcome === 'Yes') {
             return <span className='Event__resolved_yes'>Resolved: Yes</span>
-        } else if (eventInfo.outcome =='No') {
+        } else if (eventInfo.outcome ==='No') {
             return <span className='Event__resolved_no'>Resolved: No</span>
         }
 
