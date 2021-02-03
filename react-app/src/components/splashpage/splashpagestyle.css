@@ -20,13 +20,23 @@
     width: 100%;
 }
 
-.splash-footer__github {
-    padding: 5px 5px 5px 1%
+.splash-footer__links {
+    padding: 5px 5px 5px 1%;
+    display: flex;
+    justify-content: center;
 }
 
-.splash-footer__github img {
-    height: 50%;
+.splash-footer__links img {
+    height: 50px;
     width: auto;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.splash-footer__copyright {
+    text-align: center;
+    color: white;
+    font-size: 10px;
 }
 
 .splash-main {
