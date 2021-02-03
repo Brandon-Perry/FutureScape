@@ -31,9 +31,7 @@ const SplashPage = () => {
     return (
         <div>
             <div className='splash-container'>
-                <div className='splash-login__buton'>
-                    
-                </div>
+                
                 <div className='splash-main'>
                     <div className='splash-title'>
                         <img src={require('../../assets/logo_splash.png')} alt={'FutureScape Logo'} />
@@ -48,15 +46,20 @@ const SplashPage = () => {
                         </p>
                     </div>
 
-                    <div className='splash-form'>
-                        {loginState ? <LoginForm /> : <SignUpForm />}
+                    <div className='splash-form__container'>
+                        <div className='splash-form'>
+                            {loginState ? <LoginForm /> : <SignUpForm />}
+                        </div>
                     </div>
                     <div className='splash-buttons'>
                         <div>
                             <button onClick={changeLoginState}>{!loginState ? 'Have an Account Already?' : 'Create an Account'}</button>
                         </div>
                         <div>
-                            <button onClick={demoLogin}>Demo Sign-In</button>
+                            <button onClick={demoLogin}>Demo as User</button>
+                        </div>
+                        <div>
+                            <button>Demo as Admin</button>
                         </div>
                     </div>
 

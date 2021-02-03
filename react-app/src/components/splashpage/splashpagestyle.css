@@ -40,7 +40,7 @@
 }
 
 .splash-main {
-    background-color: white;
+    background-color: rgba(255, 255, 255, .3);
     max-width: 45%;
     margin-left: 10%;
     margin-top: 5%;
@@ -52,11 +52,12 @@
 .signup-form {
     display: flex;
     flex-direction: column;
+    
 }
 
 .signup-form input {
-    max-width: 50%;
     margin-top: 10px;
+    background-color: rgba(255, 255, 255, .5);
 }
 
 /* .signup-form input:active {
@@ -83,12 +84,22 @@
 .splash-buttons {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .splash-buttons button {
     border: none;
     border-radius: 5px;
     margin: 5px;
+}
+
+.splash-form__container {
+    display: flex;
+    justify-content: center;
+}
+
+.splash-form {
+    width: 50%
 }
 
 .splash-form button {
