@@ -14,6 +14,10 @@ const NavBar = () => {
     const goToCreateEvent = () => {
         history.push('/create_event')
     }
+
+    const goToTutorial = () => {
+        history.push('/tutorial')
+    }
     
     return(
         <div className='NavBar__container'>
@@ -25,6 +29,9 @@ const NavBar = () => {
             <div className='NavBar__user_logout_container'>
                 <div className='NavBar__user'>
                     <p>{currentUser.username}: {currentUser.points} points</p>
+                </div>
+                <div>
+                    <button onClick={goToTutorial}>Tutorial</button>
                 </div>
                 <div className='NavBar__create_event'>
                     {/* <Link to='/create_event'>Create Event</Link> */}

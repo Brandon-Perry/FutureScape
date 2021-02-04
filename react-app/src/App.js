@@ -14,6 +14,7 @@ import NavBar from './components/NavBar'
 import Main from './components/main/Main'
 import Event from './components/event/Event'
 import CreateEvent from './components/createEvent/CreateEvent'
+import Tutorial from './components/tutorial/Tutorial'
 
 //STORE
 import {authenticate} from './store/session'
@@ -54,6 +55,10 @@ function App() {
 			<Route exact path='/create_event'>
 				<NavBar />
 				<CreateEvent />
+			</Route>
+			<Route exact path='/tutorial'>
+				<NavBar />
+				<Tutorial />
 			</Route>
 		</Switch>
 	  </BrowserRouter>

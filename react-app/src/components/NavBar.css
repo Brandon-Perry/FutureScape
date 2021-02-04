@@ -20,7 +20,8 @@
     display: flex;
     /* position: absolute; */
     flex-direction: row;
-    align-items: flex-end;
+    align-items: center;
+
 }
 
 .NavBar__user {

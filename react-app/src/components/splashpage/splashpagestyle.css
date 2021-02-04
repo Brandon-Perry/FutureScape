@@ -52,7 +52,6 @@
 .signup-form {
     display: flex;
     flex-direction: column;
-    
 }
 
 .signup-form input {
@@ -96,6 +95,7 @@
 .splash-form__container {
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .splash-form {

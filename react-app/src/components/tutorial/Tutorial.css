@@ -1,0 +1,44 @@
+.Tutorial__container {
+    margin-left: 0 auto;
+    margin-right: 0 auto;
+    position: fixed;
+    top: 100px;
+    bottom: 25px;
+    left: 25%;
+    right: 25%;
+    width: 50%;
+    border: 2px solid #007feb;
+    border-radius: 20px;
+
+}
+
+.Tutorial__container h3 {
+    text-emphasis: bold;
+    color: white;
+}
+
+.Tutorial-question {
+    background-color: #007feb;
+
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.Tutorial-question:hover {
+    cursor: pointer;
+    background-color: rgba(0, 127, 235, .3);
+}
+
+.Tutorial-answer {
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: rgba(0, 127, 235, .3);
+    border-radius: 5px;
+    border: 1px solid black
+}
