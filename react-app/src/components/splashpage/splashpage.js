@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import './splashpagestyle.css'
 
-import SplashFooter from './splashfooter'
+import SplashFooter from '../Footer'
 import SignUpForm from '../auth/signup'
 import LoginForm from '../auth/login'
 import * as sessionActions from '../../store/session'

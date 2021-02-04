@@ -2,8 +2,8 @@
     margin-left: 0 auto;
     margin-right: 0 auto;
     position: fixed;
-    top: 100px;
-    bottom: 25px;
+    top: 10%;
+    bottom: 10%;
     left: 25%;
     right: 25%;
     width: 50%;
@@ -41,4 +41,8 @@
     background-color: rgba(0, 127, 235, .3);
     border-radius: 5px;
     border: 1px solid black
+}
+
+.Tutorial__container p {
+    margin: 10px;
 }

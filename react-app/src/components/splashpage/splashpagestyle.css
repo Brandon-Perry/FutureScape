@@ -12,32 +12,7 @@
     font-family: sans-serif;
 }
 
-.splash-footer {
-    background: black;
-    position: absolute;
-    top: 95%;
-    /* bottom: 0px; */
-    width: 100%;
-}
 
-.splash-footer__links {
-    padding: 5px 5px 5px 1%;
-    display: flex;
-    justify-content: center;
-}
-
-.splash-footer__links img {
-    height: 50px;
-    width: auto;
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-.splash-footer__copyright {
-    text-align: center;
-    color: white;
-    font-size: 10px;
-}
 
 .splash-main {
     background-color: rgba(255, 255, 255, .3);

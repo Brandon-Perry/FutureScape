@@ -49,7 +49,7 @@ const Tutorial = () => {
 
     return (
         <div className='Tutorial__container'>
-            <p>
+            <p className='Tutorial-head-text'>
                 Welcome to FutureScape! The app to answer your questions about the 
                 future. On your first visit, you might wonder, how does this all
                 work? Well, this page will (hopefully) answer all your questions. 
@@ -75,7 +75,7 @@ const Tutorial = () => {
                     then they are not rewarded anything.
                 </p>
                 <p>
-                    Because of the effecient market hypothesis (the trading value of a commodity or stock reflects all known information)
+                    Because of the efficient market hypothesis (the trading value of a commodity or stock reflects all known information)
                     , prediction markets can be used as a tool for crowd-sourcing the probabilities of something happening.
                     A good example of this is PredictIt, a prediction market for elections and other political events.
                     This particular prediction market doesn't trade options. Read more about how this particular market works below!
@@ -87,7 +87,7 @@ const Tutorial = () => {
             </div>
             {thisMarket ? <div className='Tutorial-answer'>
                 <p>
-                    Some keen observers might notice that this market differs wildley from the way that traditional prediction markets work.
+                    Some keen observers might notice that this market differs wildly from the way that traditional prediction markets work.
                     They would be right! Instead of trading options like you would on a stock market, this market rewards users for adding information
                     to the market that corrects the previous prediciton. In essence, users who think the previous prediction is wrong will give their 
                     estimate instead, and if that estimate is more accurate, they get points. The next paragraph goes into more technical details. 
@@ -98,7 +98,7 @@ const Tutorial = () => {
                     a video game will be released by a certain date. The market starts off at 50/50, which is usually a bad prediction, to encourage users to 
                     begin putting in their predictions. You could look through the company's history and find that 60% of the time, they release their games 
                     on schedule, so you start off with a 60/40 prediction. As the date nears, you might read about various problems the dev team is facing, so that
-                    would update your probability towards a higher 'no' outcome. However, let's say someone whos' more familiar with the project comes along and finds that 
+                    would update your probability towards a higher 'no' outcome. However, let's say someone who's more familiar with the project comes along and finds that 
                     the current predictions are too pessimistic. They can then try to correct the market towards what they think is the true probability. When the event eventually
                     resolves as either 'yes' or 'no', the market will reward them for however much they pushed the market towards the actual outcome.
                 </p>

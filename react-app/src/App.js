@@ -15,6 +15,7 @@ import Main from './components/main/Main'
 import Event from './components/event/Event'
 import CreateEvent from './components/createEvent/CreateEvent'
 import Tutorial from './components/tutorial/Tutorial'
+import Footer from './components/Footer'
 
 //STORE
 import {authenticate} from './store/session'
@@ -47,18 +48,22 @@ function App() {
 			<Route exact path='/app'>
 				<NavBar />
 				<Main />
+				<Footer />
 			</Route>
 			<Route exact path='/event/:eventId'>
 				<NavBar />
 				<Event />
+				<Footer />
 			</Route>
 			<Route exact path='/create_event'>
 				<NavBar />
 				<CreateEvent />
+				<Footer />
 			</Route>
 			<Route exact path='/tutorial'>
 				<NavBar />
 				<Tutorial />
+				<Footer />
 			</Route>
 		</Switch>
 	  </BrowserRouter>
