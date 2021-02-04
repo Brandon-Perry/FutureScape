@@ -24,7 +24,16 @@ const SplashPage = () => {
 
         setLoginState(true)
 
-        return dispatch(sessionActions.login({'email': 'demo@demo.com', 'password':'password'}))
+        return dispatch(sessionActions.login({'email': 'demo@user.com', 'password':'password'}))
+    }
+
+    const demoAdminLogin = (e) => {
+        e.preventDefault()
+
+        setLoginState(true)
+
+        return dispatch(sessionActions.login({'email': 'demo@admin.com', 'password': 'password'}))
+
     }
 
 
@@ -59,7 +68,7 @@ const SplashPage = () => {
                             <button onClick={demoLogin}>Demo as User</button>
                         </div>
                         <div>
-                            <button>Demo as Admin</button>
+                            <button onClick={demoAdminLogin}>Demo as Admin</button>
                         </div>
                     </div>
 

@@ -14,10 +14,12 @@ def seed_all():
         ####GENERATE USERS
 
         dev = User(username='Dev', email='dev@dev.com', password='password123456', admin=True)
-        demo_user = User(username='Demo', email='demo@demo.com', password='password', admin=True)
+        demo_user = User(username='Demo', email='demo@user.com', password='password')
+        demo_admin = User(username='Demo_Admin', email='demo@admin.com', password='password', admin=True)
         seedy = User(username='Seedy McData', email='seedy@demo.com', password='password')
         db.session.add(dev)
         db.session.add(demo_user)
+        db.session.add(demo_admin)
         db.session.add(seedy)
         extra_users_list = [demo_user, seedy]
         for _i in list(range(0,10)):
