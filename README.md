@@ -81,7 +81,6 @@ Redux is used to store the state and share it across the application. Below is a
 
 ```js
 /const GET_EVENTS = 'events'
-// const RESOLVE_EVENTS = 'resolve-event'
 
 const setEvents = (events) => {
     return {type: GET_EVENTS, payload: events}
