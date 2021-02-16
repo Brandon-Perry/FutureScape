@@ -1,93 +1,195 @@
 # FutureScape
+*By Brandon Perry*
+Check out the live version [here](https://futurescape.herokuapp.com/)
 
-Basic Overview:
+**Check out the live version [here](https://futurescape.herokuapp.com/)**
 
-Technologies used: -React -Flask -Postgres -Some graphing technology?
+**Table of Contents**
+- [OpenBook](#futurescape)
+  - [OpenBook at a Glance](#futurescape-at-a-glance)
+  - [Application Architecture and Technologies Used](#application-architecture-and-technologies-used)
+  - [Frontend Overview](#frontend-overview)
+    - [React](#react)
+    - [Redux](#redux)
+  - [Backend Overview](#backend-overview)
+    - [Authentication and Application Security](#authentication-and-application-security)
+    - [Relational Database Design](#relational-database-design)
+  - [Conclusion & Next Steps](#conclusion--next-steps)
 
-MVPS: Users should be able to create an event for users to make predictions on 
-Users should be able to assign probabilities for each option to occur, and the Event should register and display this against other users 
-Events should automatically lock at a certain time, where an admin can determine the outcome and automatically give/take the users points 
-Users can comment comment on different events to discuss their thoughts. Users can search for events
+## FutureScape at a Glance
 
-Bonus MVPs
-Flair for users
+FutureScape is a prediction market that crowd-sources the probabilities of yes/no questions about future events, such as "Will US GDP grow by 3% in 2021". The market rewards users for how much they corrected the previous prediction towards what the market resolves as. For example, if the previous prediction was 60/40, and the next prediction is 70/30 and the market resolves as yes, then that user is rewarded for moving the market closer to the correct answer. If the event resolves as no, then that user would have been docked points. As a user, you can submit predictions, create new markets for a question, and post comments on a market. Admin users have the additional priviledge of being able to determine what the market should resolve as. 
 
-Back-end routes: /api/users/ <-- Get all users 
-/api/users/:id <-- Get a user 
-/api/users/ POST <-- Create a user 
-/api/users/ PUT <-- Edit a user /api/users/:id DELETE <-- Delete a user 
-/api/users/:id/events <-- Gets all events that a user has predicted on /api/users/:id/comments <-- Get all comments that a user has made
+## Application Architecture and Technologies Used
 
-/api/events/:id <-- Get an event 
-/api/events/ <-- Get all events 
-/api/events/ POST <-- Create an event 
-/api/events/ PUT <-- Edit an event 
-/api/events/ DELETE <-- Delete an event
+FutureScape was built with a backend server using the Flask framework, a PostgreSQL database to store all the data, and the Flask-SQLAlchemy extension to incorporate SQLAlchemy ORM into the application.
 
-/api/events/:category <-- Get all events related to a category
+The frontend was rendered using React, with a Redux store that maintains the whole state throughout the application. Components were styled with CSS.
 
-/api/events/:id/predictions <-- Get all predictions on this event
+## Frontend Overview
 
-/api/events/:id/comments <-- Get all comments about this event 
-/api/events/:id/comments/:id <-- Get a single comment 
-/api/events/:id/comments/ POST <-- Create comment 
-/api/events/:id/comments/:id PUT <-- Edit comment 
-/api/events/:id/comments/:id DELETE <-- Delete comment
+### React
 
-/api/events/:id/resolve/:trueorfalse <-- Allows admin to resolve an event, rewarding users 
-/api/events/:id/lock <-- Locks event from further predictions
+The frontend was built out using React components and styled with CSS. An example is given below:
 
-Front-end Routes: 
-/ <-- App home page (users can't perform actions like making a prediction until they are logged in, but can see the bets going on) 
-/login <-- Login /signup <-- Signup /demo <-- tutorial walk-through
+```js
+const MainEvent = ({event}) => {
 
-/events/:id <-- particular event, its predictions, and comments 
-/events/category/:name <-- Events filtered by category name (preset) 
-/users/:id <-- See a user's profile, their predictions, etc
+    const linkToEvent = `/event/${event.id}`
 
-/createEvent <-- Allows users to create a new event
+    let lastYes = null
+    let lastNo = null
 
-/tutorial <-- Tutorial for all new users
+    if (!event.predictions[event.predictions.length-2]) {
+        lastYes = 50
+    } else {
+        lastYes = event.predictions[event.predictions.length-2].probability
+    }
 
-Home page layout https://wireframe.cc/ubanUO
+    if (!event.predictions[event.predictions.length-1]) {
+        lastNo = 50
+    } else {
+        lastNo = event.predictions[event.predictions.length-1].probability
+    }
+    
+    return (
+        <div className='Main__event' id={event.id} key={event.id}>
 
-Event/:id page https://wireframe.cc/QX6QAa
+            <div className='Main__event_title'>
+                <Link to={linkToEvent}><h3>{event.title}</h3></Link> 
+            </div>
+            <div className='Main__event_graph'>
+                <Chart predictions={event.predictions} />
+            </div>
+            <div className='Main__event_current_predictions'>
+                <p><span className='Main__event_yes'>{lastYes}</span> <span className='Main__event_no'>{lastNo}</span></p>
+            </div>
 
-User/:id page https://wireframe.cc/Wup9eX
+            <div className='Main__event_resolved'>
+                {event.resolved ? <p>Resolved</p> : <p>Unresolved</p>}
+            </div>
 
-Create event page https://wireframe.cc/nJHSDb
+        </div>
+    )
+}
+
+```
+
+### Redux
+
+Redux is used to store the state and share it across the application. Below is an example of the code that's used to get all the events and resolve any events that have either had their conditions met or have met their expiration date.
+
+```js
+/const GET_EVENTS = 'events'
+// const RESOLVE_EVENTS = 'resolve-event'
+
+const setEvents = (events) => {
+    return {type: GET_EVENTS, payload: events}
+}
+
+export const allEvents = () => async(dispatch) => {
+    const response = await fetch('/api/events/')
+
+    const resJson = await response.json()
+    dispatch(setEvents(resJson))
+    return response
+}
+
+export const resolveAndUpdateEvents = (event_ids) => async(dispatch) => {
+    const response = await fetch('/api/events/resolve', {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+            'event_ids':event_ids,
+            'return_all_events': true
+        })
+    })
+
+    const resJson = await response.json()
+
+    //Just going to use getEvents since this sends back the same information
+    dispatch(setEvents(resJson))
+}
+
+const initialState = {events: null}
+
+const eventReducer = (state = initialState, action) => {
+    let new_state
+
+    switch(action.type) {
+        case GET_EVENTS:
+            new_state = Object.assign({}, state)
+            new_state.events = action.payload;
+            return new_state;
+        default:
+            return state
+        
+    }
+}
+
+export default eventReducer
+```
+
+## Backend Overview
+
+The backend was built using Flask and SQLAlchemy. Below is an example of the route that's used to resolve and score the users based on their predictions. First, it assigns the event its outcome (yes is 1, no is 2). Then, it filters the predictions attached to that event based on its outcome, cycles through those predictions and calculates the points for each user, and then adds those points to each user in the database.
+
+```py
+@event_routes.route('/<event_id>/score/<choice_id>', methods=['PUT'])
+def handle_scores(event_id, choice_id):
+
+    event = Event.query.get(event_id)
+    if int(choice_id) == 1:
+        event.outcome = 'Yes'
+        db.session.commit()
+    if int(choice_id) == 2:
+        event.outcome = 'No'
+        db.session.commit()
+  
+    predictions = [prediction.to_dict() for prediction in event.predictions]
+ 
+    chosen_predictions = [prediction for prediction in predictions if prediction['choice_id']== int(choice_id)]
+ 
+    score_dict = {}
+
+    for prediction in chosen_predictions:
+     
+        score = None
+        if chosen_predictions.index(prediction) == 0:
+            score = scoring_function(prediction['probability'], 50)
+        else:
+            previous_index = chosen_predictions.index(prediction) - 1
+            previous_prediction = chosen_predictions[previous_index]
+            score = scoring_function(prediction['probability'], previous_prediction['probability'])
+        
+        if prediction['user_id'] not in score_dict:
+            score_dict[prediction['user_id']] = score 
+        else:
+            new_score = score_dict.get(prediction['user_id']) + score
+            score_dict.update({prediction['user_id']: new_score })
 
 
-Components
+    for user_id in score_dict.keys():
+        current_user = User.query.get(user_id)
+        new_score = current_user.points + score_dict[user_id]
+        current_user.points = new_score
+     
+        db.session.commit()
+        
+    return {'success':'yes'}
 
-Navbar <-- Present on every page. Contains logo, the user, and a searchbar
-Footer <-- Contains footer stuff
+```
 
-Main application webpage
-Homepage <-- Main page with all of the predictions going on. Can just filter the events by category when users click on categories
-DisplayOptions <-- Contains display options and categories for the homepage that the user can change. Changes state that affects render of the events.
-Events <-- Contains all the information for each event. Will populate the homepage for each event
+### Authentication and Application Security
 
-Event page
-EventsContainer <-- Container for the entire event page. Will contain and render subcomponents
-Graph <-- Depicts the graph of prediction values
-UserPredictions <-- Contains the X most recent predictions that have been made, listing the user and their prediction values. Should update as different users enter values
-Comments <-- Should render comments and update as comments are made
-
-User page
-UserContainer <--Container for user information
-StatsRankings <-- Displays the stats and rankings of the user in question
-UserComments <-- Displays the comments that a user has made and which events this has been on
-
-Event Creation page
-EventCreationContainer <-- Container for event creation
-EventCreationForm <-- Form for creating event
-
-
-Qustions to James
--How to have state update whenever someone else initiates a call on a prediction? --Websockets 
+To authenticate a user, I implemented WTForms and used Flask-WTForms to incorporate it into the application. The validations used came from WTForms. Users' passwords were incremented using the Werkzeug library.
 
 
 
--React-infinite-scroller
--React paginate
+## Conclusion & Next Steps
+
+This was my capstone project at App Academy and was the second project to feature Flask/SQLAlchemy and third to use React. There were plenty of challenges to overcome, particularly on the backend since there were so many nested objects. However, I really enjoyed working through and resolving them, and I will continue working on the application. In the future, I want to implement:
+
+* Web-sockets so predictions and events are updated in real-time to users without refresh.
+* Pagination for the main applicaiton page to handle more events
+* Refactor the exising code to include wrappers that handle unpacking of information and standardize information intake of existing features so that future edits are faster and cleaner. For example: Object1 -> WrapperForObj1 -> Feature(input); Object2 -> WrapperForObj2 -> Feature(input)
