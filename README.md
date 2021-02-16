@@ -5,8 +5,8 @@ Check out the live version [here](https://futurescape.herokuapp.com/)
 **Check out the live version [here](https://futurescape.herokuapp.com/)**
 
 **Table of Contents**
-- [OpenBook](#futurescape)
-  - [OpenBook at a Glance](#futurescape-at-a-glance)
+- [FutureScape](#futurescape)
+  - [FutureScape at a Glance](#futurescape-at-a-glance)
   - [Application Architecture and Technologies Used](#application-architecture-and-technologies-used)
   - [Frontend Overview](#frontend-overview)
     - [React](#react)
