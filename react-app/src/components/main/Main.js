@@ -27,6 +27,7 @@ const Main = () => {
     }
 
     const checkTimes = () => {
+        console.log('hit checkTimes')
         if (!events) return
         const now = new Date()
 
@@ -49,6 +50,7 @@ const Main = () => {
     }
 
     useEffect(() => {
+        let intervalChecker;
         (async() => {
             dispatch(eventActions.allEvents())
                 
@@ -60,10 +62,14 @@ const Main = () => {
             setCategories([...names])
 
 
-            setInterval(() => checkTimes(), 60000)
+            intervalChecker = setInterval(() => checkTimes(), 1000)
            
             
         })()
+
+        return function clearTimer() {
+            clearInterval(intervalChecker)
+        }
     }, [])
 
     
