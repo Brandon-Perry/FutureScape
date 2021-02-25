@@ -34,7 +34,13 @@ const Event = () => {
     }, [dispatch])
 
   
-
+    useEffect(() => {
+        checkTimes()
+        let checkInterval = setInterval(()=> checkTimes(), 60000)
+        return function cleanupInterval() {
+            clearInterval(checkInterval)
+        }
+    },[eventInfo])
     
     
     useEffect(()=> {
@@ -61,8 +67,6 @@ const Event = () => {
         })
         setNoList(listOfNo.map(prediction => prediction.probability))
 
-        checkTimes()
-        setInterval(()=> checkTimes(), 60000)
 
         let scroller = document.getElementsByClassName('Event__comments_container')
         scroller[0].scrollTop = scroller[0].scrollHeight
@@ -81,7 +85,6 @@ const Event = () => {
     }, [probabilityNo, probabilityYes])
 
     const checkTimes = () => {
-
         const is_expired = eventInfo.resolved
         if (is_expired) return
         
