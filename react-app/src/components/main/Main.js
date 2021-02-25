@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 
 import './Main.css'
@@ -15,6 +15,7 @@ const Main = () => {
     const [searchTerm, setSearchTerm] = useState(null)
     const [eventsDisplay, setEventsDisplay] = useState(null)
     const events = useSelector((state) => state.events.events)
+    let eventsRef = useRef(null)
 
     const dispatch = useDispatch();
 
@@ -27,10 +28,13 @@ const Main = () => {
     }
 
     const checkTimes = () => {
-        if (!events) return
+        console.log(eventsRef.current)
+        if (!eventsRef.current) return
+        console.log('inside checkTimes')
         const now = new Date()
 
-        const unresolved_events = events.filter(event => !event.resolved)
+        const unresolved_events = eventsRef.current.filter(event => !event.resolved)
+        console.log('unresolved events', unresolved_events)
 
         const toResolveEvents = unresolved_events.filter(event => {
             if (now.getTime() >= new Date(event.expires).getTime() && !event.resolved) {
@@ -38,7 +42,8 @@ const Main = () => {
             }
         })
 
-        if (toResolveEvents) {
+
+        if (toResolveEvents.length) {
             
             let event_ids = []
             toResolveEvents.forEach(event => event_ids.push(event.id))
@@ -49,6 +54,7 @@ const Main = () => {
     }
 
     useEffect(() => {
+        let intervalChecker;
         (async() => {
             dispatch(eventActions.allEvents())
                 
@@ -60,16 +66,21 @@ const Main = () => {
             setCategories([...names])
 
 
-            setInterval(() => checkTimes(), 60000)
+            intervalChecker = setInterval(() => checkTimes(), 60000)
            
             
         })()
+
+        return function clearTimer() {
+            clearInterval(intervalChecker)
+        }
     }, [])
 
     
 
     useEffect(() => {
         displayFilter()
+        eventsRef.current = events
     }, [events, filterCategory, searchTerm, sortBy, showOnlyUnresolved])
 
 
