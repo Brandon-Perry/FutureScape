@@ -61,9 +61,14 @@ function App() {
 				<Footer />
 			</Route>
 			<Route exact path='/tutorial'>
-				<NavBar />
-				<Tutorial />
-				<Footer />
+				<div className='body_wrapper'>
+					<NavBar />
+					{/* <div className='horizontal_container'> */}
+
+					{/* </div> */}
+					<Tutorial />
+					<Footer />
+				</div>
 			</Route>
 		</Switch>
 	  </BrowserRouter>

@@ -1,7 +1,7 @@
 .splash-footer {
     background: black;
-    position: absolute;
-    top: 95%;
+    /* position: sticky; */
+    /* top: 95%; */
     /* bottom: 0px; */
     width: 100%;
 }
