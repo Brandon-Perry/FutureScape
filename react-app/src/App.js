@@ -46,26 +46,29 @@ function App() {
 				<SplashPage />
 			</Route>
 			<Route exact path='/app'>
-				<NavBar />
-				<Main />
-				<Footer />
+				<div className='body_wrapper'>
+					<NavBar />
+					<Main />
+					<Footer />
+				</div>
 			</Route>
 			<Route exact path='/event/:eventId'>
-				<NavBar />
-				<Event />
-				<Footer />
+				<div className='body_wrapper'>
+					<NavBar />
+					<Event />
+					<Footer />
+				</div>
 			</Route>
 			<Route exact path='/create_event'>
-				<NavBar />
-				<CreateEvent />
-				<Footer />
+				<div className='body_wrapper'>
+					<NavBar />
+					<CreateEvent />
+					<Footer />
+				</div>
 			</Route>
 			<Route exact path='/tutorial'>
 				<div className='body_wrapper'>
 					<NavBar />
-					{/* <div className='horizontal_container'> */}
-
-					{/* </div> */}
 					<Tutorial />
 					<Footer />
 				</div>

@@ -1,15 +1,14 @@
 .Event__container {
-    margin-left: 0 auto;
-    margin-right: 0 auto;
-    padding: 10px;
-    position: fixed;
-    top: 10%;
-    bottom: 10%;
-    left: 25%;
-    right: 25%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    display:flex;
+    flex-direction: column;
     width: 50%;
+    min-height: 75vh;
     border: 2px solid #007feb;
     border-radius: 20px;
+    padding: 15px;
 
 }
 
@@ -42,7 +41,7 @@
 }
 
 .Event__comments_container {
-    position: absolute;
+    position: relative;
     bottom: 0px;
     max-height: 250px;
     overflow-y: scroll;

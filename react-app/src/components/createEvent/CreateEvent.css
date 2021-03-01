@@ -1,14 +1,14 @@
 .createEvent__container {
-    margin-left: 0 auto;
-    margin-right: 0 auto;
-    position: fixed;
-    top: 10%;
-    bottom: 10%;
-    left: 25%;
-    right: 25%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    display:flex;
+    flex-direction: column;
     width: 50%;
-    border: 2px solid blue;
+    min-height: 75vh;
+    border: 2px solid #007feb;
     border-radius: 20px;
+    padding: 15px;
 
 }
 
