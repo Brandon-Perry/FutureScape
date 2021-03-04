@@ -19,39 +19,7 @@ const Main = () => {
 
     const dispatch = useDispatch();
 
-    const changeOnlyResolved = () => {
-        setShowOnlyUnresolved(!showOnlyUnresolved)
-    }
-
-    const changeSortBy = (e) => {
-        setSortBy(e.target.value)
-    }
-
-    const checkTimes = () => {
-        console.log(eventsRef.current)
-        if (!eventsRef.current) return
-        console.log('inside checkTimes')
-        const now = new Date()
-
-        const unresolved_events = eventsRef.current.filter(event => !event.resolved)
-        console.log('unresolved events', unresolved_events)
-
-        const toResolveEvents = unresolved_events.filter(event => {
-            if (now.getTime() >= new Date(event.expires).getTime() && !event.resolved) {
-                return event
-            }
-        })
-
-
-        if (toResolveEvents.length) {
-            
-            let event_ids = []
-            toResolveEvents.forEach(event => event_ids.push(event.id))
-    
-            dispatch(eventActions.resolveAndUpdateEvents(event_ids))
-        }
-
-    }
+    //Use Effects
 
     useEffect(() => {
         let intervalChecker;
@@ -76,31 +44,64 @@ const Main = () => {
         }
     }, [])
 
-    
-
     useEffect(() => {
         displayFilter()
         eventsRef.current = events
+        console.log(eventsDisplay)
+        console.log('events', events)
+        console.log(sortBy)
     }, [events, filterCategory, searchTerm, sortBy, showOnlyUnresolved])
 
 
+
+
+
+
+    //Services and more complex blocks
+
+    const checkTimes = () => {
+        if (!eventsRef.current) return
+        const now = new Date()
+
+        const unresolved_events = eventsRef.current.filter(event => !event.resolved)
+
+        const toResolveEvents = unresolved_events.filter(event => {
+            if (now.getTime() >= new Date(event.expires).getTime() && !event.resolved) {
+                return event
+            }
+        })
+
+
+        if (toResolveEvents.length) {
+            
+            let event_ids = []
+            toResolveEvents.forEach(event => event_ids.push(event.id))
+    
+            dispatch(eventActions.resolveAndUpdateEvents(event_ids))
+        }
+
+    }
+
     
     const displayFilter = () => {
+
         
         if (!events) return
 
         let sortedEvents = null
 
         if (sortBy === 'popular') {
-
-            sortedEvents = events.sort((a,b) => {
+            console.log('hit popular')
+            sortedEvents = events.slice().sort((a,b) => {
                 const created_atA = new Date(a['created_at'])
                 const created_atB = new Date(b['created_at'])
+
                 const timeElapsedA = Date.now() - created_atA.getTime()
-                
-                const scoreA = a.predictions.length / Math.log(timeElapsedA)
                 const timeElapsedB = Date.now() - created_atB.getTime()
-                const scoreB = b.predictions.length / Math.log(timeElapsedB)
+                
+                const scoreA = Math.max(a.predictions.length,1) / Math.log10(timeElapsedA)
+                const scoreB = Math.max(b.predictions.length,1) / Math.log10(timeElapsedB)
+                
                 
                 return scoreB - scoreA
             })
@@ -108,20 +109,7 @@ const Main = () => {
 
         if (sortBy === 'recent') {
 
-            sortedEvents = events.sort((a,b) => {
-                const created_atA = new Date(a['created_at'])
-                const created_atB = new Date(b['created_at'])
-                const timeElapsedA = Date.now() - created_atA.getTime()
-                
-                const timeElapsedB = Date.now() - created_atB.getTime()
-                
-                return timeElapsedB - timeElapsedA
-            })
-        }
-
-        if (sortBy === 'oldest') {
-
-            sortedEvents = events.sort((a,b) => {
+            sortedEvents = events.slice().sort((a,b) => {
                 const created_atA = new Date(a['created_at'])
                 const created_atB = new Date(b['created_at'])
                 const timeElapsedA = Date.now() - created_atA.getTime()
@@ -129,6 +117,19 @@ const Main = () => {
                 const timeElapsedB = Date.now() - created_atB.getTime()
                 
                 return timeElapsedA - timeElapsedB
+            })
+        }
+
+        if (sortBy === 'oldest') {
+
+            sortedEvents = events.slice().sort((a,b) => {
+                const created_atA = new Date(a['created_at'])
+                const created_atB = new Date(b['created_at'])
+                const timeElapsedA = Date.now() - created_atA.getTime()
+                
+                const timeElapsedB = Date.now() - created_atB.getTime()
+                
+                return timeElapsedB - timeElapsedA
             })
         }
 
@@ -156,6 +157,7 @@ const Main = () => {
                 }
             })
         }
+        console.log('sortedEvents', sortedEvents)
         setEventsDisplay(sortedEvents)
         
 
@@ -163,12 +165,9 @@ const Main = () => {
   
   
         
-  
+    
+    //Use State Helper Functions
 
-
-    const makeItem = (el) => {
-        return <option key={el} value={el}>{el}</option>
-    }
 
     const changeFilterCategory = (e) => {
         setFilterCategory(e.target.value)
@@ -181,6 +180,22 @@ const Main = () => {
             setSearchTerm(e.target.value)
         }
     }
+
+    const changeOnlyResolved = () => {
+        setShowOnlyUnresolved(!showOnlyUnresolved)
+    }
+
+    const changeSortBy = (e) => {
+        setSortBy(e.target.value)
+    }
+
+
+    //Small Helper Functions
+
+    const makeItem = (el) => {
+        return <option key={el} value={el}>{el}</option>
+    }
+
 
 
     return (
@@ -217,6 +232,7 @@ const Main = () => {
                     <MainEvent event={el} />
                 )) : null}
             </div>
+          
         </div>
     )
 }

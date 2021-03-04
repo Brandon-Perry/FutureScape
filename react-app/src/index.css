@@ -3,3 +3,7 @@
     width: 100%;
     /* background-color: teal; */
 }
+
+/* .cardView::-webkit-scrollbar {
+    display: none;
+} */
